@@ -19,8 +19,8 @@ export class ContextSelection extends Component {
             <div>
                 <OEMSelector oems={this.props.definitions.oems} selectedOEM={this.props.context.oem }/>
                 <br />
-                <ServiceSelector services={[{value: 'parkinfo'}, {value: 'flightinfo'}]}
-                                 selectedService={{value: 'parkinfo'}}/>
+                <ServiceSelector services={this.props.definitions.services}
+                                 selectedService={this.props.definitions.services[0]}/>
             </div>
         );
     }

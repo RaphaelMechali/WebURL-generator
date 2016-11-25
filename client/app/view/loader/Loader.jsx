@@ -1,9 +1,6 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-
-import {actionFactory} from '../../state/actions/actionFactory';
-
-import styles from './Loader.css';
+import React, {Component} from "react";
+import {connect} from "react-redux";
+import {actionFactory} from "../../state/actions/actionFactory";
 
 const dataRestService = 'definitions';
 
@@ -28,9 +25,8 @@ export class LoaderComponent extends Component {
             console.trace('Successfully loaded data, now resolving it');
             loadedData.json().then(jsonData => this.props.dispatch(actionFactory.buildLoadComplete(jsonData)));
         } else {
-            let message = `Failed loading data with error status ${loadedData.status ? loadedData.status : 'unknown'}: ${loadedData.statusText}`;
-            console.trace(message);
-            this.props.dispatch(actionFactory.buildLoadFailed(message));
+            console.trace(`Failed loading data with server error ${loadedData.statusText}`);
+            this.props.dispatch(actionFactory.buildLoadFailed(loadedData.statusText));
         }
     }
 

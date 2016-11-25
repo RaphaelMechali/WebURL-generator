@@ -8,14 +8,12 @@ import styles from "./ServiceSelector.css";
 export class ServiceSelector extends Component {
 
     renderItem(service) {
-        // TODO: service label instead of value
-        return <div className={`service-item service-${service.value}`} title={service.value} />;
+        return <div className={`service-item service-${service.value}`} title={service.label} />;
     }
 
     render() {
         return <PictureSelector list={this.props.services} selectedItem={this.props.selectedService}
-                                containerClass="ServiceSelector"
-                                buildItemView={elt => this.renderItem(elt)}
+                                containerClass="ServiceSelector" buildItemView={this.renderItem}
                                 buildSelectionAction={elt => actionFactory.buildServiceSelected(elt)}/>
     }
 

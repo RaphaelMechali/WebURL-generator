@@ -1,27 +1,74 @@
 const express = require('express');
-const path = require('path');
 const handlebars = require('express-handlebars'); // templating
-var jsonfile = require('jsonfile')
+const path = require('path');
+const fspromise = require('fs-promise');
 
 
 const application = express();
+
+/**
+ * Server definition files
+ */
+const definitionFiles = {
+    root: "static/definitions",
+    common: "common-definitions.json",
+    backend: "backend-definitions.json",
+    servicesRoot: "services"
+};
 
 // 1 - Serve static resources (index.html)
 application.use('/', express.static(path.join(__dirname, 'static/client')));
 
 // 2 - Serve definitions as definitions file concatenation (so that the client emits only one request)
 application.get('/definitions', function (req, res) {
-    jsonfile.readFile('static/definitions/common-definitions.json', function (err, obj) {
-        if (err) {
-            res.status(500).send('Internal server error');
-        } else {
 
-            // TODO: might be very wrong (not async) or even not needed, check me!
-            // TODO load other data
-            res.send(JSON.stringify(obj));
-        }
+    // 1 - list files in services definition folder
+    let servicesRoot = `${definitionFiles.root}/${definitionFiles.servicesRoot}`;
+    fspromise.readdir(servicesRoot).then(files => {
+        // prepare files to read
+        let serviceFiles = files
+            .filter(fileName => fileName.match(/.*\.json/))
+            .map(fileName => `${servicesRoot}/${fileName}`);
+        let filesToLoad = [
+            `${definitionFiles.root}/${definitionFiles.common}`,
+            `${definitionFiles.root}/${definitionFiles.backend}`,
+        ].concat(serviceFiles);
+
+        // read all
+        Promise.all(filesToLoad.map(filePath => fspromise.readFile(filePath)))
+            .then(loadedFiles => {
+                let asJSONObjects = loadedFiles.map(content => JSON.parse(content));
+                let responseObject = (([commonDefinitions, backendDefinition, ...serviceDefinitions]) => {
+                    // bundle the object together
+                    let responseObject= {};
+                    Object.assign(responseObject, commonDefinitions);
+                    Object.assign(responseObject, backendDefinition);
+                    responseObject.services = serviceDefinitions;
+                    return responseObject
+                })(asJSONObjects);
+                res.send(responseObject);
+            }).catch(e => {
+            console.error(e);
+            sendErrorMessage(500, res, "The server failed loading definition files. Please check server resources");
+        });
+
+    }).catch(e => {
+        console.error(e);
+        sendErrorMessage(500, res, "The server failed listing service definition files. Please check server resources");
     });
+
+    /*Promise.all([
+     fspromise.readFile('static/definitions/')
+     ]).then(([commonDefinitionData]) => {
+     res.send(commonDefinitionData).end();
+     }).catch(() =>
+     */
 });
+
+function sendErrorMessage(code, res, message) {
+    res.writeHead(code, message, {'content-type': 'text/plain'});
+    res.end(message);
+};
 
 
 // 3 - Post interface to distant services

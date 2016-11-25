@@ -15,6 +15,29 @@
       "label": "T&I 5",
       "type": "dispatcher",
       "url": "http://tui-mbbservices05.audi-connect.de/mbb",
+      "regions": [
+        "eu_rdw",
+        "nar",
+        "jp"
+      ],
+      "users": []
+    },
+    {
+      "label": "T&I 3 - china",
+      "type": "dispatcher",
+      "url": "http://tui-mbbservices05.audi-connect.de/mbb",
+      "regions": [
+        "cn"
+      ],
+      "users": []
+    },
+    {
+      "label": "T&I 5",
+      "type": "dispatcher",
+      "url": "http://tui-mbbservices05.audi-connect.de/mbb",
+      "regions": [
+        "cn"
+      ],
       "users": []
     }
   ]

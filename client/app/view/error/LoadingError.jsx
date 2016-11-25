@@ -9,11 +9,8 @@ export class LoadingError extends Component {
                 <h1>Loading error</h1>
                 <p>
                     <strong>Application startup failed.<br /></strong>
-
-                    The definitions could be retrieved from server.
                 </p>
                 <p>
-                    Complete error message:<br />
                     {this.props.message}
                 </p>
             </div>

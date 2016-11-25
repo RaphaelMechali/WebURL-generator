@@ -1,3 +1,8 @@
+.PictureSelector {
+    display: inline-flex;
+    flex-direction: row;
+}
+
 .PictureSelector .item-selected {
     border: 1px solid #3bb6c6;
 }

@@ -16,7 +16,7 @@ class MainViewComponent extends Component {
         // this properties reflects store state (as seen below, see reducer)
         if (this.props.appModel.loadingError) {
             // data loading failed
-            return <LoadingError message={this.props.loadingError}/>;
+            return <LoadingError message={this.props.appModel.loadingError}/>;
         } else if (!this.props.appModel || !this.props.appModel.definitionModel) {
             // data loading should be performed
             return <Loader/>;
@@ -38,7 +38,7 @@ class MainViewComponent extends Component {
     static stateToProperties(reduxState) {
         return {
             appModel: reduxState
-        }
+        };
     }
 }
 
