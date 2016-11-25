@@ -1,0 +1,77 @@
+.OEMSelector {
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    border-radius: 5px;
+    border: 5px solid #c2c6ab;
+}
+
+.oem-option {
+    width: 150px;
+    height: 100px;
+    position: relative;
+    background: white;
+}
+
+.oem-option:not(:first-child) {
+    border: 0 solid #c2c6ab;
+    border-left-width: 1px;
+}
+
+.oem-option-selected {
+    background: #c2c6ab;
+}
+
+.oem-option .top-layer {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.oem-option .top-layer:hover {
+    opacity: 0.5;
+    background: #3bb6c6;
+}
+
+.oem-picture-base {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+.oem-picture-vw {
+    background: url('./assets/vw.png') no-repeat;
+    background-size: 100%;
+    background-position-y: 60%;
+}
+
+.oem-picture-audi {
+    background: url('./assets/audi.png') no-repeat;
+    background-size: 100%;
+    background-position-y: 50%;
+
+}
+
+.oem-picture-bentley {
+    background: url('./assets/bentley.png') no-repeat;
+    background-size: 110%;
+    background-position-y: 60%;
+
+}
+
+.oem-picture-porsche {
+    background: url('./assets/porsche.png') no-repeat;
+    background-size: 90%;
+    background-position-x: 50%;
+    background-position-y: 50%;
+}
+
+.oem-picture-skoda {
+    background: url('./assets/skoda.png') no-repeat;
+    background-size: 90%;
+    background-position-x: 50%;
+    background-position-y: 50%;
+}

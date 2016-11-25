@@ -1,0 +1,21 @@
+{
+  "backends": [
+    {
+      "label": "App 8",
+      "type": "tomcat",
+      "url": "10.36.18.40"
+    },
+    {
+      "label": "Dispatch 8",
+      "type": "dispatcher",
+      "url": "http://mib-tx.vw.mbb6.valtech.de/mbb",
+      "users": []
+    },
+    {
+      "label": "T&I 5",
+      "type": "dispatcher",
+      "url": "http://tui-mbbservices05.audi-connect.de/mbb",
+      "users": []
+    }
+  ]
+}

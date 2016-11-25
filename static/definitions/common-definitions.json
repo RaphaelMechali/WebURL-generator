@@ -1,0 +1,113 @@
+{
+  "oems": [
+    {
+      "value": "audi",
+      "default": true
+    },
+    {
+      "value": "bentley"
+    },
+    {
+      "value": "porsche"
+    },
+    {
+      "value": "skoda"
+    },
+    {
+      "value": "vw"
+    }
+  ],
+  "revisions": [
+    {
+      "value": "rev1",
+      "label": "Rev. 1",
+      "oem": [
+        "vw"
+      ]
+    },
+    {
+      "value": "rev2",
+      "label": "Rev. 2",
+      "oem": [
+        "vw"
+      ]
+    },
+    {
+      "value": "rev3",
+      "label": "Rev. 3",
+      "oem": [
+        "audi"
+      ]
+    },
+    {
+      "value": "rev4",
+      "label": "Rev. 4",
+      "oem": [
+        "audi"
+      ]
+    },
+    {
+      "value": "rev5",
+      "label": "Rev. 5",
+      "default": true,
+      "oem": [
+        "audi"
+      ]
+    },
+    {
+      "value": "rev6",
+      "label": "Rev. 6",
+      "oem": [
+        "porsche"
+      ]
+    },
+    {
+      "value": "rev7",
+      "label": "Rev. 7",
+      "oem": [
+        "porsche"
+      ]
+    },
+    {
+      "value": "rev8",
+      "label": "Rev. 8",
+      "oem": [
+        "bentley"
+      ]
+    },
+    {
+      "value": "d5",
+      "label": "D5 - MIB2Plus",
+      "oem": [
+        "audi",
+        "porsche"
+      ]
+    }
+  ],
+  "regions": [
+    {
+      "value": "cn",
+      "label": "China",
+      "alt-value": {
+        "revisions": [
+          "rev1",
+          "rev2"
+        ],
+        "value": "chn"
+      }
+    },
+    {
+      "value": "eu_rdw",
+      "label": "Europa",
+      "default": true
+    },
+    {
+      "value": "jp",
+      "label": "Japan"
+    },
+    {
+      "value": "nar",
+      "label": "North America"
+    }
+  ]
+}

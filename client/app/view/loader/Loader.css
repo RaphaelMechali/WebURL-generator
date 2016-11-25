@@ -1,0 +1,32 @@
+.Loader {
+    width: 350px;
+    border: thin solid white;
+    background-color: #222222;
+    box-sizing: border-box;
+    margin: 50px auto;
+    padding: 15px;
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.Loader h1{
+    text-align: center;
+    padding: 0;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: white;
+}
+
+.Loader p{
+    text-align: justify;
+    color: lightgray;
+    margin-bottom: 30px;
+}
+
+.Loader progress{
+    margin-bottom: 10px;
+}
+

@@ -1,0 +1,13 @@
+.PictureSelector .item-selected {
+    border: 1px solid #3bb6c6;
+}
+
+.PictureSelector .item-not-selected {
+    border: 1px solid transparent;
+}
+
+.PictureSelector .item-selected:hover, .PictureSelector .item-not-selected:hover {
+    background: #3bb6c6; /* TODO transition! */
+    border: 1px solid white;
+}
+

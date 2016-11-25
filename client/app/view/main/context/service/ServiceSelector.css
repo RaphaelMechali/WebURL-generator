@@ -1,0 +1,72 @@
+.ServiceSelector {
+    background: red;
+    display: inline-flex;
+    flex-direction: row;
+}
+
+.ServiceSelector .service-item{
+    width: 103px;
+    height: 63px;
+    margin: 5px;
+}
+
+.ServiceSelector .service-applist {
+    background: url('./assets/applist.png') no-repeat;
+    background-size: 100%;
+}
+.ServiceSelector .service-cityevents {
+    background: url('./assets/cityevents.png') no-repeat;
+    background-size: 100%;
+}
+.ServiceSelector .service-countryinfo {
+    background: url('./assets/countryinfo.png') no-repeat;
+    background-size: 100%;
+}
+.ServiceSelector .service-dealerevents {
+    background: url('./assets/dealerevents.png') no-repeat;
+    background-size: 100%;
+}
+.ServiceSelector .service-efpi {
+    background: url('assets/efpi.png') no-repeat;
+    background-size: 100%;
+}
+.ServiceSelector .service-flightinfo {
+    background: url('./assets/flightinfo.png') no-repeat;
+    background-size: 100%;
+}
+.ServiceSelector .service-fpi {
+    background: url('./assets/fpi.png') no-repeat;
+    background-size: 100%;
+}
+.ServiceSelector .service-news {
+    background: url('./assets/news.png') no-repeat;
+    background-size: 100%;
+}
+.ServiceSelector .service-parkinfo {
+    background: url('./assets/parkinfo.png') no-repeat;
+    background-size: 100%;
+}
+.ServiceSelector .service-poi {
+    background: url('./assets/poi.png') no-repeat;
+    background-size: 100%;
+}
+.ServiceSelector .service-roadrestriction {
+    background: url('./assets/roadrestriction.png') no-repeat;
+    background-size: 100%;
+}
+.ServiceSelector .service-traininfo {
+    background: url('./assets/traininfo.png') no-repeat;
+    background-size: 100%;
+}
+.ServiceSelector .service-travelinfo {
+    background: url('./assets/travelinfo.png') no-repeat;
+    background-size: 100%;
+}
+.ServiceSelector .service-violations {
+    background: url('./assets/violations.png') no-repeat;
+    background-size: 100%;
+}
+.ServiceSelector .service-weather {
+    background: url('./assets/weather.png') no-repeat;
+    background-size: 100%;
+}
