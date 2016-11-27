@@ -1,4 +1,45 @@
 {
   "value": "applist",
-  "label": "Applications list"
+  "label": "Applications list",
+  "tomcat-access": {
+    "url": "applist/v1",
+    "port": 8080
+  },
+  "dispatcher-access": [
+    {
+      "revisions": [
+        "rev1",
+        "rev2"
+      ],
+      "url": "applist/v1"
+    },
+    {
+      "revisions": [
+        "rev3"
+      ],
+      "url": "applist/v2"
+    },
+    {
+      "revisions": [
+        "rev4",
+        "rev5",
+        "rev6",
+        "rev7",
+        "rev8"
+      ],
+      "url": "applist/v3"
+    }
+  ],
+  "applications": [
+    {
+      "application": "Service list",
+      "appendURL": "",
+      "subapplications": [
+        {
+          "parameters": [],
+          "headers": []
+        }
+      ]
+    }
+  ]
 }

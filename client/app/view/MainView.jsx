@@ -24,7 +24,7 @@ class MainViewComponent extends Component {
             // nominal case: initialization complete
             return (
                 <form>
-                    <ContextSelection definitions={this.props.appModel.definitionModel} context={this.props.appModel.dialog.context}/>
+                    <ContextSelection definitions={this.props.appModel.definitionModel} context={this.props.appModel.dialog}/>
                 </form>
             );
         }

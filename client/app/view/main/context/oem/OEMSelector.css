@@ -2,33 +2,13 @@
     flex-direction: row;
     flex-wrap: nowrap;
     border-radius: 5px;
-    border: 5px solid #c2c6ab;
-    background: white;
-}
-
-.oem-option {
-
-    position: relative;
-    background: white;
-}
-
-.oem-option:not(:first-child) {
-    border: 0 solid #c2c6ab;
-    border-left-width: 1px;
-}
-
-.oem-option-selected {
-    background: #c2c6ab;
-}
-
-.oem-option .top-layer:hover {
-    opacity: 0.5;
-    background: #3bb6c6;
+    padding: 5px;
+    background: #eeeeee;
 }
 
 .oem-picture-base {
-    width: 150px;
-    height: 100px;
+    width: 110px;
+    height: 80px;
     margin: 0;
 }
 
@@ -47,7 +27,7 @@
 
 .oem-picture-bentley {
     background: url('./assets/bentley.png') no-repeat;
-    background-size: 110%;
+    background-size: 100%;
     background-position-y: 60%;
 
 }
@@ -62,6 +42,6 @@
 .oem-picture-skoda {
     background: url('./assets/skoda.png') no-repeat;
     background-size: 90%;
-    background-position-x: 50%;
-    background-position-y: 50%;
+    background-position-x: 40%;
+    background-position-y: 40%;
 }

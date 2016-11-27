@@ -17,5 +17,4 @@ export class ServiceSelector extends Component {
                                 buildSelectionAction={elt => actionFactory.buildServiceSelected(elt)}/>
     }
 
-
 }

@@ -17,10 +17,10 @@ export class ContextSelection extends Component {
     render() {
         return (
             <div>
-                <OEMSelector oems={this.props.definitions.oems} selectedOEM={this.props.context.oem }/>
+                <OEMSelector oems={this.props.availableOEMS} selectedOEM={this.props.selectedOEM}/>
                 <br />
-                <ServiceSelector services={this.props.definitions.services}
-                                 selectedService={this.props.definitions.services[0]}/>
+                <ServiceSelector services={this.props.availableServices}
+                                 selectedService={this.props.selectedService}/>
             </div>
         );
     }

@@ -3,9 +3,7 @@ export const allActions = {
     /* ----- Loading ----- */
     onLoadComplete: 'onLoadComplete',
     onLoadFailed: 'onLoadFailed',
-    onOEMSelected: 'onOEMSelected',
-    onServiceSelected: 'onOEMSelected'
-
+    onContextValueSelected: 'onContextValueSelected'
 };
 
 /**
@@ -23,20 +21,16 @@ export const actionFactory = {
         return {type, data};
     },
 
+    buildLoadFailed(errorMessage) {
+        return this.buildAction(allActions.onLoadFailed, errorMessage);
+    },
+
     buildLoadComplete(loadedData) {
         return this.buildAction(allActions.onLoadComplete, loadedData);
     },
 
-    buildOEMSelected(oem){
-        return this.buildAction(allActions.onOEMSelected, oem);
-    },
-
-    buildServiceSelected(service){
-        return this.buildAction(allActions.onServiceSelected, service);
-    },
-
-    buildLoadFailed(errorMessage) {
-        return this.buildAction(allActions.onLoadFailed, errorMessage);
+    buildContextSelection(fieldName, selectedValue){
+        return this.buildAction(allActions.onContextValueSelected, {fieldName, selectedValue});
     }
 
-}
+};

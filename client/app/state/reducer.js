@@ -1,4 +1,5 @@
 import {allActions} from './actions/actionFactory';
+import * as dialog from './dialog';
 
 export const initialState = {
     // empty at start, fields for expectations
@@ -7,33 +8,9 @@ export const initialState = {
     loadingError: null
 };
 
-function initializeDialog(definitionData) {
-    const selectedOEM = definitionData.oems.find(oem => oem.default);
-    const selectedRevision = definitionData.revisions.find(rev => rev.default);
-    const selectedMarket = definitionData.revisions.find(regions => regions.default);
-    return {
-        context: {
-            oem: selectedOEM,
-            rev: selectedRevision,
-            market: selectedMarket,
-            service: undefined, // TODO
-            page: undefined // TODO
-        }
-    };
-    // TODO : seriously, init it all in cascade xD
-}
 
-function changeContextOEM(previousDialog, newOEM) {
-    let newContext = Object.assign({}, previousDialog.context);
-    // TODO : seriously, change it all in cascade xD
-    newContext.oem = newOEM;
-    return {
-        context: newContext
-    };
-}
-
-export function reducer(state, action) {
-    if (!state) {
+export function reducer(previousState, action) {
+    if (!previousState) {
         return initialState;
     }
 
@@ -42,12 +19,20 @@ export function reducer(state, action) {
             return {definitionModel: null, dialog: {}, loadingError: action.data};
         case allActions.onLoadComplete:
             // loaded definitionModel
-            return {definitionModel: action.data, dialog: initializeDialog(action.data), loadingError: null};
-        case allActions.onOEMSelected:
-            return {definitionModel: state.definitionModel, dialog: changeContextOEM(state.dialog, action.data)};
+            return {
+                definitionModel: action.data,
+                dialog: dialog.createInitialDialogState(action.data),
+                loadingError: null
+            };
+        case allActions.onContextValueSelected:
+            return {
+                definitionModel: previousState.definitionModel, // reported
+                dialog: dialog.selectAttribute(previousState.definitionModel, previousState.dialog, action.fieldName, action.selectedValue),
+                loadingError: null
+            };
         default:
             console.info("Readucer: unhandled action type:", action);
     }
 
-    return state;
+    return previousState;
 }

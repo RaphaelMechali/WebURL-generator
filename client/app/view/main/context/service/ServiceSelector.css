@@ -1,12 +1,16 @@
 .ServiceSelector {
-    display: inline-flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    border-radius: 5px;
+    padding: 5px;
+    background: #eeeeee;
+    margin-top: 5px;
 }
 
 .ServiceSelector .service-item{
     width: 103px;
     height: 63px;
-    margin: 5px;
+    margin: 4px;
 }
 
 .ServiceSelector .service-applist {
