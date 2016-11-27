@@ -23962,7 +23962,7 @@
 	        case _actionFactory.allActions.onContextValueSelected:
 	            return {
 	                definitionModel: previousState.definitionModel, // reported
-	                dialog: dialog.selectAttribute(previousState.definitionModel, previousState.dialog, action.fieldName, action.selectedValue),
+	                dialog: dialog.selectAttribute(previousState.definitionModel, previousState.dialog, action.data.fieldName, action.data.selectedValue),
 	                loadingError: null
 	            };
 	        default:
@@ -24231,11 +24231,13 @@
 	];
 	
 	function createInitialDialogState(definitionModel) {
+	    console.trace("Create initial dialog state");
 	    // start by picking an oem value and the run the chain
-	    return updateChain(definitionModel); // index = -1 : update all elements
+	    return updateChain(definitionModel); // index = -1 : update all elements;
 	}
 	
 	function selectAttribute(definitionModel, previousDialogState, valueName, newValue) {
+	    console.trace("Setting ", valueName, " with ", newValue);
 	    var firstIndex = contextSettersChain.findIndex(function (setter) {
 	        return setter.name === valueName;
 	    });
@@ -24340,11 +24342,11 @@
 	                // data loading should be performed
 	                return _react2.default.createElement(_Loader.Loader, null);
 	            } else {
-	                // nominal case: initialization complete
+	                // nominal case: initialization complete / TODO optimize dialog mapping to avoid mapping the parameters ands such
 	                return _react2.default.createElement(
 	                    'form',
 	                    null,
-	                    _react2.default.createElement(_ContextSelection.ContextSelection, { definitions: this.props.appModel.definitionModel, context: this.props.appModel.dialog })
+	                    _react2.default.createElement(_ContextSelection.ContextSelection, { dialog: this.props.appModel.dialog })
 	                );
 	            }
 	        }
@@ -24927,6 +24929,8 @@
 	
 	var _ServiceSelector = __webpack_require__(/*! ./service/ServiceSelector */ 231);
 	
+	var _RevisionSelector = __webpack_require__(/*! ./revision/RevisionSelector */ 255);
+	
 	var _ContextSelection = __webpack_require__(/*! ./ContextSelection.css */ 249);
 	
 	var _ContextSelection2 = _interopRequireDefault(_ContextSelection);
@@ -24957,10 +24961,12 @@
 	            return _react2.default.createElement(
 	                "div",
 	                null,
-	                _react2.default.createElement(_OEMSelector.OEMSelector, { oems: this.props.availableOEMS, selectedOEM: this.props.selectedOEM }),
+	                _react2.default.createElement(_OEMSelector.OEMSelector, { oems: this.props.dialog.availableOEMS, selectedOEM: this.props.dialog.selectedOEM }),
 	                _react2.default.createElement("br", null),
-	                _react2.default.createElement(_ServiceSelector.ServiceSelector, { services: this.props.availableServices,
-	                    selectedService: this.props.selectedService })
+	                _react2.default.createElement(_ServiceSelector.ServiceSelector, { services: this.props.dialog.availableServices,
+	                    selectedService: this.props.dialog.selectedService }),
+	                _react2.default.createElement(_RevisionSelector.RevisionSelector, { revisions: this.props.dialog.availableRevisions,
+	                    selectedRevision: this.props.dialog.selectedRevision })
 	            );
 	        }
 	    }]);
@@ -25024,7 +25030,7 @@
 	            return _react2.default.createElement(_PictureSelector.PictureSelector, { list: this.props.oems, selectedItem: this.props.selectedOEM,
 	                containerClass: "OEMSelector", buildItemView: this.renderItem,
 	                buildSelectionAction: function buildSelectionAction(oem) {
-	                    return _actionFactory.actionFactory.buildOEMSelected(oem);
+	                    return _actionFactory.actionFactory.buildContextSelection("oem", oem);
 	                } });
 	        }
 	    }]);
@@ -25148,7 +25154,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".PictureSelector {\n    display: inline-flex;\n    flex-direction: row;\n}\n\n.PictureSelector .item-selected {\n    border: 1px solid white;\n    background: #cccccc;\n}\n\n.PictureSelector .item-not-selected {\n    border: 1px solid transparent;\n}\n\n.PictureSelector .item-selected:hover, .PictureSelector .item-not-selected:hover {\n    background: #57bbea; /* TODO transition! */\n    transition: background 350ms ease-in;\n    border: 1px solid white;\n}\n\n", ""]);
+	exports.push([module.id, ".PictureSelector {\n    display: inline-flex;\n    flex-direction: row;\n}\n\n.PictureSelector .item-selected {\n    border: 1px solid #57bbea;\n    background: white;\n}\n\n.PictureSelector .item-not-selected {\n    border: 1px solid transparent;\n}\n\n.PictureSelector .item-selected:hover, .PictureSelector .item-not-selected:hover {\n    background: #57bbea; /* TODO transition! */\n    transition: background 350ms ease-in;\n    border: 1px solid #57bbea;\n}\n\n", ""]);
 	
 	// exports
 
@@ -25300,7 +25306,7 @@
 	            return _react2.default.createElement(_PictureSelector.PictureSelector, { list: this.props.services, selectedItem: this.props.selectedService,
 	                containerClass: "ServiceSelector", buildItemView: this.renderItem,
 	                buildSelectionAction: function buildSelectionAction(elt) {
-	                    return _actionFactory.actionFactory.buildServiceSelected(elt);
+	                    return _actionFactory.actionFactory.buildContextSelection("service", elt);
 	                } });
 	        }
 	    }]);
@@ -25622,7 +25628,125 @@
 	
 	
 	// module
-	exports.push([module.id, "body {\n    background-color: #333333;\n    color: white;\n}\n\n.App {\n    width: 100%;\n    height: 100%;\n}\n", ""]);
+	exports.push([module.id, "body {\n    background-color: #333333;\n    color: white;\n    font-family: \"Trebuchet MS\";\n}\n\n.App {\n    width: 100%;\n    height: 100%;\n}\n", ""]);
+	
+	// exports
+
+
+/***/ },
+/* 255 */
+/*!********************************************************************!*\
+  !*** ./client/app/view/main/context/revision/RevisionSelector.jsx ***!
+  \********************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.RevisionSelector = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _actionFactory = __webpack_require__(/*! ../../../../state/actions/actionFactory */ 210);
+	
+	var _PictureSelector = __webpack_require__(/*! ../selector/PictureSelector */ 221);
+	
+	var _RevisionSelector = __webpack_require__(/*! ./RevisionSelector.css */ 256);
+	
+	var _RevisionSelector2 = _interopRequireDefault(_RevisionSelector);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var RevisionSelector = exports.RevisionSelector = function (_Component) {
+	    _inherits(RevisionSelector, _Component);
+	
+	    function RevisionSelector() {
+	        _classCallCheck(this, RevisionSelector);
+	
+	        return _possibleConstructorReturn(this, (RevisionSelector.__proto__ || Object.getPrototypeOf(RevisionSelector)).apply(this, arguments));
+	    }
+	
+	    _createClass(RevisionSelector, [{
+	        key: "renderItem",
+	        value: function renderItem(revision) {
+	            return _react2.default.createElement(
+	                "div",
+	                { className: "revision-item" },
+	                _react2.default.createElement(
+	                    "strong",
+	                    null,
+	                    revision.label
+	                )
+	            );
+	        }
+	    }, {
+	        key: "render",
+	        value: function render() {
+	            return _react2.default.createElement(_PictureSelector.PictureSelector, { list: this.props.revisions, selectedItem: this.props.selectedRevision,
+	                containerClass: "RevisionSelector", buildItemView: this.renderItem,
+	                buildSelectionAction: function buildSelectionAction(elt) {
+	                    return _actionFactory.actionFactory.buildContextSelection("revision", elt);
+	                } });
+	        }
+	    }]);
+
+	    return RevisionSelector;
+	}(_react.Component);
+
+/***/ },
+/* 256 */
+/*!********************************************************************!*\
+  !*** ./client/app/view/main/context/revision/RevisionSelector.css ***!
+  \********************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(/*! !./../../../../../../~/css-loader!./RevisionSelector.css */ 257);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(/*! ./../../../../../../~/style-loader/addStyles.js */ 218)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../../../../node_modules/css-loader/index.js!./RevisionSelector.css", function() {
+				var newContent = require("!!./../../../../../../node_modules/css-loader/index.js!./RevisionSelector.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 257 */
+/*!***********************************************************************************!*\
+  !*** ./~/css-loader!./client/app/view/main/context/revision/RevisionSelector.css ***!
+  \***********************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(/*! ./../../../../../../~/css-loader/lib/css-base.js */ 217)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, ".RevisionSelector {\r\n    flex-direction: column;\r\n    flex-wrap: wrap;\r\n    border-radius: 5px;\r\n    padding: 5px;\r\n    background: #eeeeee;\r\n    margin-top: 5px;\r\n    color: #333333;\r\n}\r\n\r\n.RevisionSelector .revision-item{\r\n    width: 103px;\r\n    height: 63px;\r\n    margin: 4px;\r\n    display: table-cell;\r\n    vertical-align: middle;\r\n    align-content: center;\r\n    text-align: center;\r\n}", ""]);
 	
 	// exports
 

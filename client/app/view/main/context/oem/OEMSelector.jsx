@@ -18,7 +18,7 @@ export class OEMSelector extends Component {
     render() {
         return <PictureSelector list={this.props.oems} selectedItem={this.props.selectedOEM}
                                 containerClass="OEMSelector" buildItemView={this.renderItem}
-                                buildSelectionAction={oem => actionFactory.buildOEMSelected(oem)}/>
+                                buildSelectionAction={oem => actionFactory.buildContextSelection("oem", oem)}/>
     }
 
 }

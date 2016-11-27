@@ -14,7 +14,7 @@ export class ServiceSelector extends Component {
     render() {
         return <PictureSelector list={this.props.services} selectedItem={this.props.selectedService}
                                 containerClass="ServiceSelector" buildItemView={this.renderItem}
-                                buildSelectionAction={elt => actionFactory.buildServiceSelected(elt)}/>
+                                buildSelectionAction={elt => actionFactory.buildContextSelection("service", elt)}/>
     }
 
 }

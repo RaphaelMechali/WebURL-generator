@@ -155,12 +155,14 @@ const contextSettersChain = [
 
 
 export function createInitialDialogState(definitionModel) {
+    console.trace("Create initial dialog state");
     // start by picking an oem value and the run the chain
-    return updateChain(definitionModel); // index = -1 : update all elements
+    return updateChain(definitionModel); // index = -1 : update all elements;
 }
 
 
 export function selectAttribute(definitionModel, previousDialogState, valueName, newValue) {
+    console.trace("Setting ", valueName, " with ", newValue);
     let firstIndex = contextSettersChain.findIndex(setter => setter.name === valueName);
     // start by picking an oem value and the run the chain
     return updateChain(definitionModel, previousDialogState, firstIndex, newValue);

@@ -27,7 +27,7 @@ export function reducer(previousState, action) {
         case allActions.onContextValueSelected:
             return {
                 definitionModel: previousState.definitionModel, // reported
-                dialog: dialog.selectAttribute(previousState.definitionModel, previousState.dialog, action.fieldName, action.selectedValue),
+                dialog: dialog.selectAttribute(previousState.definitionModel, previousState.dialog, action.data.fieldName, action.data.selectedValue),
                 loadingError: null
             };
         default:

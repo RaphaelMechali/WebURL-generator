@@ -21,10 +21,10 @@ class MainViewComponent extends Component {
             // data loading should be performed
             return <Loader/>;
         } else {
-            // nominal case: initialization complete
+            // nominal case: initialization complete / TODO optimize dialog mapping to avoid mapping the parameters ands such
             return (
                 <form>
-                    <ContextSelection definitions={this.props.appModel.definitionModel} context={this.props.appModel.dialog}/>
+                    <ContextSelection dialog={this.props.appModel.dialog}/>
                 </form>
             );
         }
