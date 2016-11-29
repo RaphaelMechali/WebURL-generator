@@ -2,19 +2,24 @@
   "oems": [
     {
       "value": "audi",
+      "label": "Audi",
       "default": true
     },
     {
-      "value": "bentley"
+      "value": "bentley",
+      "label": "Bentley"
     },
     {
-      "value": "porsche"
+      "value": "porsche",
+      "label": "Porsche"
     },
     {
-      "value": "skoda"
+      "value": "skoda",
+      "label": "Skoda"
     },
     {
-      "value": "vw"
+      "value": "vw",
+      "label": "VolksWagen"
     }
   ],
   "revisions": [

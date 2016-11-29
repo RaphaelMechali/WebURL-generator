@@ -1,13 +1,12 @@
-/* Common styles */
-
-
-/*
-TODO?
-.fieldset {
-    color: white;
+.MainView{
+    border-spacing: 5px;
+    display: table;
 }
 
-.fieldset .legend {
-    color: white;
+.MainView .layoutRow{
+    display: table-row;
 }
-*/
+
+.MainView layoutColumn{
+    display: table-cell;
+}

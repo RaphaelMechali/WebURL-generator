@@ -6,7 +6,7 @@
 
 Development mode
 
-`npm start`
+`npm run-script start-dev`
 
 Production mode
 

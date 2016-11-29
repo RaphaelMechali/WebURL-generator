@@ -23,9 +23,19 @@ class MainViewComponent extends Component {
         } else {
             // nominal case: initialization complete / TODO optimize dialog mapping to avoid mapping the parameters ands such
             return (
-                <form>
-                    <ContextSelection dialog={this.props.appModel.dialog}/>
-                </form>
+                <div className="MainView">
+                    <div className="layoutRow">
+                        <div className="layoutColumn">
+                            <ContextSelection dialog={this.props.appModel.dialog}/>
+                        </div>
+                        <div className="layoutColumn">
+                            Column 2
+                        </div>
+                        <div className="layoutColumn">
+                            Column 3
+                        </div>
+                    </div>
+                </div>
             );
         }
     }

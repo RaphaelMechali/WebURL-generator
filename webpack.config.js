@@ -17,8 +17,15 @@ const config = {
         loaders: [
             // Extract css files
             {test: /\.css$/, loader: "style-loader!css-loader"},
-            {test: /\.(png|jpg)$/, loader: "url-loader"}, // all images in main bundle
-            {test: /\.jsx?/, include: APP_DIR, loader: 'babel'}
+            // all images in main bundle
+            {test: /\.(png|jpg)$/, loader: "url-loader"},
+            // babel
+            {test: /\.jsx?/, include: APP_DIR, loader: 'babel'},
+            // fonts
+            {
+                test: /\.(eot|ttf|woff|woff2)$/,
+                loader: 'file?name=static/assets/fonts/[name].[ext]'
+            }
         ]
     },
     resolve: {
