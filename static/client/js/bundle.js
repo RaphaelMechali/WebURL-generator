@@ -32962,7 +32962,16 @@
 	    _createClass(OEMSelector, [{
 	        key: "renderItem",
 	        value: function renderItem(oem) {
-	            return _react2.default.createElement("div", { className: "oem-picture-base oem-picture-" + oem.value });
+	            return _react2.default.createElement(
+	                "div",
+	                null,
+	                _react2.default.createElement(
+	                    "div",
+	                    null,
+	                    oem.label
+	                ),
+	                _react2.default.createElement("div", { className: "oem-picture-base oem-picture-" + oem.value })
+	            );
 	        }
 	    }, {
 	        key: "render",
@@ -33094,7 +33103,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".PictureSelector {\n    display: inline-flex;\n    flex-direction: row;\n}\n\n.PictureSelector .item-selected {\n    border: 1px solid #57bbea;\n    background: white;\n}\n\n.PictureSelector .item-not-selected {\n    border: 1px solid transparent;\n}\n\n.PictureSelector .item-selected:hover, .PictureSelector .item-not-selected:hover {\n    background: #57bbea; /* TODO transition! */\n    transition: background 350ms ease-in;\n    border: 1px solid #57bbea;\n}\n\n", ""]);
+	exports.push([module.id, ".PictureSelector {\n    display: inline-flex;\n    flex-direction: row;\n}\n\n.PictureSelector .item-selected {\n    border: 1px solid #57bbea;\n    background: white;\n    color: #57bbea;\n}\n\n.PictureSelector .item-not-selected {\n    border: 1px solid transparent;\n    color: black;\n}\n\n.PictureSelector .item-selected:hover, .PictureSelector .item-not-selected:hover {\n    background: #57bbea; /* TODO transition! */\n    transition: background 350ms ease-in;\n    border: 1px solid #57bbea;\n}\n\n", ""]);
 	
 	// exports
 

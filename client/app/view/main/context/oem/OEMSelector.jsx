@@ -13,13 +13,18 @@ export class OEMSelector extends Component {
     }
 
     renderItem(oem) {
-        return <div className={`oem-picture-base oem-picture-${oem.value}`}/>;
+        return (
+            <div>
+                <div>{oem.label}</div>
+                <div className={`oem-picture-base oem-picture-${oem.value}`}/>
+            </div>
+        );
     }
 
     render() {
         return <PictureSelector list={this.props.oems} selectedItem={this.props.selectedOEM}
                                 containerClass="OEMSelector" buildItemView={this.renderItem}
                                 buildSelectionAction={oem => actionFactory.buildContextSelection("oem", oem)}/>
-                                      }
-
     }
+
+}
