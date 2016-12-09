@@ -1,51 +1,45 @@
-.OEMGridList {
-    display: flex;
-    flex-wrap: wrap;
-    overflow-y: auto;
-    overflow-x: auto;
-    background: white;
+.OEMSelector {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    border-radius: 5px;
+    padding: 5px;
+    background: #eeeeee;
 }
 
-.OEMPictureContainer{
-    padding-top: 10px;
+.oem-picture-base {
+    width: 110px;
+    height: 80px;
+    margin: 0;
 }
 
-.OEMPictureBase {
-    min-width: 150px;
-    min-height: 120px;
-    width: 70%;
-    height: 70%;
-    margin: 0 auto;
-}
-
-.OEMPicture-vw {
+.oem-picture-vw {
     background: url('./assets/vw.png') no-repeat;
     background-size: 100%;
     background-position-y: 60%;
 }
 
-.OEMPicture-audi {
+.oem-picture-audi {
     background: url('./assets/audi.png') no-repeat;
     background-size: 100%;
     background-position-y: 50%;
 
 }
 
-.OEMPicture-bentley {
+.oem-picture-bentley {
     background: url('./assets/bentley.png') no-repeat;
     background-size: 100%;
     background-position-y: 60%;
 
 }
 
-.OEMPicture-porsche {
+.oem-picture-porsche {
     background: url('./assets/porsche.png') no-repeat;
     background-size: 90%;
     background-position-x: 50%;
     background-position-y: 50%;
 }
 
-.OEMPicture-skoda {
+.oem-picture-skoda {
     background: url('./assets/skoda.png') no-repeat;
     background-size: 90%;
     background-position-x: 40%;

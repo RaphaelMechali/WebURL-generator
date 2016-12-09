@@ -1,0 +1,20 @@
+.PictureSelector {
+    display: inline-flex;
+    flex-direction: row;
+}
+
+.PictureSelector .item-selected {
+    border: 1px solid #57bbea;
+    background: white;
+}
+
+.PictureSelector .item-not-selected {
+    border: 1px solid transparent;
+}
+
+.PictureSelector .item-selected:hover, .PictureSelector .item-not-selected:hover {
+    background: #57bbea; /* TODO transition! */
+    transition: background 350ms ease-in;
+    border: 1px solid #57bbea;
+}
+
