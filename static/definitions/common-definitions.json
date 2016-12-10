@@ -25,7 +25,7 @@
   "revisions": [
     {
       "value": "rev1",
-      "label": "Rev. 1",
+      "label": "Revision 1",
       "oems": [
         "vw",
         "skoda"
@@ -33,28 +33,28 @@
     },
     {
       "value": "rev2",
-      "label": "Rev. 2",
+      "label": "Revision. 2",
       "oems": [
         "vw"
       ]
     },
     {
       "value": "rev3",
-      "label": "Rev. 3",
+      "label": "Revision 3",
       "oems": [
         "audi"
       ]
     },
     {
       "value": "rev4",
-      "label": "Rev. 4",
+      "label": "Revision 4",
       "oems": [
         "audi"
       ]
     },
     {
       "value": "rev5",
-      "label": "Rev. 5",
+      "label": "Revision 5",
       "default": true,
       "oems": [
         "audi"
@@ -62,21 +62,21 @@
     },
     {
       "value": "rev6",
-      "label": "Rev. 6",
+      "label": "Revision 6",
       "oems": [
         "porsche"
       ]
     },
     {
       "value": "rev7",
-      "label": "Rev. 7",
+      "label": "Revision 7",
       "oems": [
         "porsche"
       ]
     },
     {
       "value": "rev8",
-      "label": "Rev. 8",
+      "label": "Revision 8",
       "oems": [
         "bentley"
       ]

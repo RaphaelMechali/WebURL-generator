@@ -1,0 +1,42 @@
+.ApplicationSelector {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    padding: 5px;
+}
+
+.ApplicationItem {
+    width: 110px;
+    height: 80px;
+    position: relative;
+}
+
+.ApplicationItemLabel {
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    font-size: 10px;
+    text-align: left;
+}
+
+.ApplicationPictureBase {
+    position: absolute;
+    top: 30%;
+    left: 15%;
+    width: 70%;
+    height: 70%;
+}
+
+.ApplicationPictureDETAIL {
+    background: url('./assets/detail.png') no-repeat;
+    background-size: 60%;
+}
+
+.ApplicationPictureLIST {
+    background: url('./assets/list.png') no-repeat;
+    background-size: 60%;
+}
+
+.ApplicationPictureSEARCH {
+    background: url('./assets/search.png') no-repeat;
+    background-size: 60%;
+}

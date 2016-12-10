@@ -10,9 +10,7 @@ export class RevisionSelector extends Component {
 
     renderItem(revision) {
         return (
-            <div className="revision-item">
-                <strong>{revision.label}</strong>
-            </div>
+            <div className="RevisionItem">{revision.label}</div>
         );
     }
 

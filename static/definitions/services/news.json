@@ -38,7 +38,8 @@
   ],
   "applications": [
     {
-      "application": "Feeds list",
+      "value": "list",
+      "label": "Feeds list",
       "appendURL": "feeds",
       "subapplications": [
         {
@@ -48,7 +49,8 @@
       ]
     },
     {
-      "application": "News list",
+      "value": "list",
+      "label": "News list",
       "appendURL": "list",
       "subapplications": [
         {
@@ -58,7 +60,8 @@
       ]
     },
     {
-      "application": "News detail",
+      "value": "list",
+      "label": "News detail",
       "appendURL": "detail",
       "subapplications": [
         {

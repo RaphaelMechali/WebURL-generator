@@ -31,7 +31,7 @@ export function reducer(previousState, action) {
                 loadingError: null
             };
         default:
-            console.info("Readucer: unhandled action type:", action);
+            console.info("Reducer: unhandled action type:", action);
     }
 
     return previousState;

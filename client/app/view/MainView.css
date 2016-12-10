@@ -1,12 +1,6 @@
 .MainView{
-    border-spacing: 5px;
-    display: table;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
 
-.MainView .layoutRow{
-    display: table-row;
-}
-
-.MainView layoutColumn{
-    display: table-cell;
-}

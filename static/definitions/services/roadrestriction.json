@@ -22,11 +22,12 @@
   ],
   "applications": [
     {
-      "application": "List",
+      "value": "list",
+      "label": "Restrictions list",
       "appendURL": "list",
       "subapplications": [
         {
-          "markets": ["cn"],
+          "regions": ["cn"],
           "revisions": ["rev4", "rev5", "d5"],
           "parameters": [],
           "headers": []

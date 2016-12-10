@@ -32,7 +32,8 @@
   ],
   "applications": [
     {
-      "application": "Parking list",
+      "value": "list",
+      "label": "Stations list",
       "appendURL": "list",
       "subapplications": [
         {
@@ -41,7 +42,18 @@
         }
       ]
     },{
-      "application": "Parking detail",
+      "value": "list",
+      "label": "Travel list",
+      "appendURL": "list",
+      "subapplications": [
+        {
+          "parameters": [],
+          "headers": []
+        }
+      ]
+    },{
+      "value": "detail",
+      "label": "Detail",
       "appendURL": "detail",
       "subapplications": [
         {

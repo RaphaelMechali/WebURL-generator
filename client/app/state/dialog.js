@@ -127,7 +127,7 @@ function filterServices(definitionModel, nextState) {
 
 
 /**
- * Filter revisions on previously selected OEM end revision
+ * Filter revisions on previously selected OEM and service
  * @param definitionModel definition model
  * @param nextState next state
  * @return selectable services
@@ -140,8 +140,56 @@ function filterRevisions(definitionModel, nextState) {
         .reduce((collected, access) => collected.concat(access.revisions.filter(rev => !collected.includes(rev))), []);
     // return intersection
     return oemRevisions.filter(revDef => flatServiceRev.includes(revDef.value));
-
 }
+
+/**
+ * Filter regions on previously selected oem / service / region
+ * @param definitionModel definition model
+ * @param nextState next state
+ * @return Array available regions
+ */
+function filterRegions(definitionModel, nextState) {
+    let selectedService = nextState.selectedService;
+
+    // regions map definition: value to region instance
+    let regionMapping = definitionModel.regions.reduce((obj, reg) => {
+        obj[reg.value] = reg;
+        return obj;
+    }, {});
+
+    // collect regions (once only, in a set) that are defined in sub applications
+    // Note: when a subapplication does not define any region / revision, it is considered defined for all
+    let availableRegions = new Set();
+    selectedService.applications.forEach(app => app.subapplications.forEach(subapp => {
+        let regions = !subapp.regions ? definitionModel.regions :
+            subapp.regions.map(regionID => regionMapping[regionID]);
+        regions.forEach(r => availableRegions.add(r));
+    }));
+
+    // use region identifiers to retrieve them in region pool
+    return Array.from(availableRegions);
+}
+
+/**
+ * Filters valid applications for selected service / revision and region
+ * @param definitionModel definition model (unused here)
+ * @param nextState next state holding current selection
+ * @returns Array with available subapplications
+ */
+function filterApplications(definitionModel, nextState) {
+    let selectedService = nextState.selectedService,
+        selectedRevision = nextState.selectedRevision,
+        selectedRegion = nextState.selectedRegion;
+
+    // return filtered applications, where each application has at least one sub application for selected region / revision
+    // note : when no regions attribute is defined in sub application, all are considered valid (also worth for revision)
+    return selectedService.applications.filter(app => app.subapplications.some(
+        subapplication =>
+        (!subapplication.regions || subapplication.regions.includes(selectedRegion.value)) &&
+        (!subapplication.revisions || subapplication.revisions.includes(selectedRevision.value)))
+    );
+}
+
 
 const contextSettersChain = [
     // 1 - OEM
@@ -149,8 +197,12 @@ const contextSettersChain = [
     // 2 - Service
     new ChainSetter("service", "selectedService", "availableServices", filterServices),
     // 3 - Revision
-    new ChainSetter("revision", "selectedRevision", "availableRevisions", filterRevisions)
-    // TODO "market", "subapp", "backend", "user"
+    new ChainSetter("revision", "selectedRevision", "availableRevisions", filterRevisions),
+    // 4 - Market
+    new ChainSetter("region", "selectedRegion", "availableRegions", filterRegions),
+    // 5 - Application
+    new ChainSetter("application", "selectedApplication", "availableApplications", filterApplications)
+    // "backend"
 ];
 
 

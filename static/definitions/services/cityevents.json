@@ -32,7 +32,8 @@
   ],
   "applications": [
     {
-      "application": "Event list",
+      "value": "list",
+      "label": "Event list",
       "appendURL": "list",
       "subapplications": [
         {
@@ -41,7 +42,8 @@
         }
       ]
     },{
-      "application": "Event detail",
+      "value": "detail",
+      "label": "Event detail",
       "appendURL": "detail",
       "subapplications": [
         {

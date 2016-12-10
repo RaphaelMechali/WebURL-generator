@@ -8,7 +8,12 @@ import styles from "./ServiceSelector.css";
 export class ServiceSelector extends Component {
 
     renderItem(service) {
-        return <div className={`service-item service-${service.value}`} title={service.label}/>;
+        return (
+            <div className="ServiceItem">
+                <div className="ServiceItemLabel">{service.label}</div>
+                <div className={`ServicePictureBase Service${service.value.toUpperCase()}`}/>
+            </div>
+        );
     }
 
     render() {

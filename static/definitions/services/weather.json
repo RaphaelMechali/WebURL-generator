@@ -38,16 +38,11 @@
   ],
   "applications": [
     {
-      "application": "Today forecast",
+      "value": "detail",
+      "label": "Today",
       "appendURL": "today",
       "subapplications": [
         {
-          "markets": [
-            "eu_rdw",
-            "nar",
-            "cn",
-            "jp"
-          ],
           "revisions": [
             "rev1",
             "rev2",
@@ -65,11 +60,12 @@
       ]
     },
     {
-      "application": "Today forecast",
+      "value": "list",
+      "label":  "Today forecast",
       "appendURL": "today-forecast",
       "subapplications": [
         {
-          "markets": [
+          "regions": [
             "eu_rdw",
             "nar",
             "cn",
@@ -92,11 +88,12 @@
       ]
     },
     {
-      "application": "Radar",
+      "value": "detail",
+      "label": "Radar",
       "appendURL": "radar",
       "subapplications": [
         {
-          "markets": [
+          "regions": [
             "eu_rdw",
             "nar",
             "cn"
@@ -118,11 +115,12 @@
       ]
     },
     {
-      "application": "Week forecast",
+      "value": "list",
+      "label": "Week forecast",
       "appendURL": "week-forecast",
       "subapplications": [
         {
-          "markets": [
+          "regions": [
             "eu_rdw",
             "nar",
             "cn",
@@ -145,11 +143,12 @@
       ]
     },
     {
-      "application": "Indicators",
+      "value": "detail",
+      "label":  "Indicators",
       "appendURL": "indicator",
       "subapplications": [
         {
-          "markets": [
+          "regions": [
             "cn"
           ],
           "revisions": [

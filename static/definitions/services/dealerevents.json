@@ -32,22 +32,24 @@
   ],
   "applications": [
     {
-      "application": "Dealer events list",
+      "value": "list",
+      "label": "Events list",
       "appendURL": "list",
       "subapplications": [
         {
-          "markets": ["cn"],
+          "regions": ["cn"],
           "revisions": ["rev4", "rev5", "d5"],
           "parameters": [],
           "headers": []
         }
       ]
     },{
-      "application": "Dealer events detail",
+      "value": "detail",
+      "label": "Events detail",
       "appendURL": "detail",
       "subapplications": [
         {
-          "markets": ["cn"],
+          "regions": ["cn"],
           "revisions": ["rev4", "rev5", "d5"],
           "parameters": [],
           "headers": []

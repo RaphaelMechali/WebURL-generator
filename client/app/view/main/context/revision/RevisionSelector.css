@@ -1,19 +1,15 @@
 .RevisionSelector {
-    flex-direction: column;
+    flex-direction: row;
     flex-wrap: wrap;
-    border-radius: 5px;
     padding: 5px;
-    background: #eeeeee;
-    margin-top: 5px;
-    color: #333333;
 }
 
-.RevisionSelector .revision-item{
-    width: 103px;
-    height: 63px;
-    margin: 4px;
-    display: table-cell;
-    vertical-align: middle;
-    align-content: center;
+.RevisionSelector .RevisionItem {
+    width: 110px;
+    height: 80px;
+    line-height: 80px;
+    box-sizing: border-box;
     text-align: center;
+    margin: 0 auto;
+    font-size: 14px;
 }

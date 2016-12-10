@@ -38,7 +38,8 @@
   ],
   "applications": [
     {
-      "application": "Airport list",
+      "value": "list",
+      "label": "Airport list",
       "appendURL": "list",
       "subapplications": [
         {
@@ -48,7 +49,8 @@
       ]
     },
     {
-      "application": "Flight list",
+      "value": "list",
+      "label": "Flight list",
       "appendURL": "list",
       "subapplications": [
         {
@@ -58,7 +60,8 @@
       ]
     },
     {
-      "application": "Flight detail",
+      "value": "detail",
+      "label": "Flight detail",
       "appendURL": "detail",
       "subapplications": [
         {
@@ -67,7 +70,8 @@
         }
       ]
     },{
-      "application": "Search",
+      "value": "search",
+      "label": "Flight/Airport search",
       "appendURL": "detail",
       "subapplications": [
         {

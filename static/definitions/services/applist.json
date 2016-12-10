@@ -32,7 +32,8 @@
   ],
   "applications": [
     {
-      "application": "Service list",
+      "value": "list",
+      "label": "Service list",
       "appendURL": "",
       "subapplications": [
         {

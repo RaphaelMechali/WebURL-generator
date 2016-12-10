@@ -17,9 +17,9 @@ class PictureSelectorComponent extends Component {
         return (
             <div className={`PictureSelector ${this.props.containerClass}`}>
                 {
-                    this.props.list.map(item =>
+                    this.props.list.map((item, index) =>
                         <div className={`${this.props.selectedItem === item ? 'item-selected' : 'item-not-selected'}`}
-                             onClick={evt => this.dispatchSelection(item)} key={item.value}>
+                             onClick={evt => this.dispatchSelection(item)} key={item.value + index}>
                             {
                                 this.props.buildItemView(item)
                             }

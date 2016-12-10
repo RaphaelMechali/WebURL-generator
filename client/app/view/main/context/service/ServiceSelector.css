@@ -1,75 +1,88 @@
 .ServiceSelector {
     flex-direction: row;
     flex-wrap: wrap;
-    border-radius: 5px;
     padding: 5px;
-    background: #eeeeee;
-    margin-top: 5px;
 }
 
-.ServiceSelector .service-item{
-    width: 103px;
-    height: 63px;
-    margin: 4px;
+.ServiceItem {
+    width: 110px;
+    height: 80px;
+    position: relative;
 }
 
-.ServiceSelector .service-applist {
+.ServiceItemLabel {
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    font-size: 10px;
+    text-align: left;
+}
+
+.ServicePictureBase{
+    position: absolute;
+    left: 15%;
+    top: 30%;
+    width: 70%;
+    height: 70%;
+}
+
+.ServiceSelector .ServiceAPPLIST {
     background: url('./assets/applist.png') no-repeat;
     background-size: 100%;
 }
-.ServiceSelector .service-cityevents {
+.ServiceSelector .ServiceCITYEVENTS {
     background: url('./assets/cityevents.png') no-repeat;
     background-size: 100%;
 }
-.ServiceSelector .service-countryinfo {
+.ServiceSelector .ServiceCOUNTRYINFO {
     background: url('./assets/countryinfo.png') no-repeat;
     background-size: 100%;
 }
-.ServiceSelector .service-dealerevents {
+.ServiceSelector .ServiceDEALEREVENTS {
     background: url('./assets/dealerevents.png') no-repeat;
     background-size: 100%;
 }
-.ServiceSelector .service-efpi {
+.ServiceSelector .ServiceEFPI {
     background: url('assets/efpi.png') no-repeat;
     background-size: 100%;
 }
-.ServiceSelector .service-flightinfo {
+.ServiceSelector .ServiceFLIGHTINFO {
     background: url('./assets/flightinfo.png') no-repeat;
     background-size: 100%;
 }
-.ServiceSelector .service-fpi {
+.ServiceSelector .ServiceFPI {
     background: url('./assets/fpi.png') no-repeat;
     background-size: 100%;
 }
-.ServiceSelector .service-news {
+.ServiceSelector .ServiceNEWS {
     background: url('./assets/news.png') no-repeat;
     background-size: 100%;
 }
-.ServiceSelector .service-parkinfo {
+.ServiceSelector .ServicePARKINFO {
     background: url('./assets/parkinfo.png') no-repeat;
     background-size: 100%;
 }
-.ServiceSelector .service-poi {
+.ServiceSelector .ServicePOI {
     background: url('./assets/poi.png') no-repeat;
     background-size: 100%;
 }
-.ServiceSelector .service-roadrestriction {
+.ServiceSelector .ServiceROADRESTRICTION {
     background: url('./assets/roadrestriction.png') no-repeat;
     background-size: 100%;
 }
-.ServiceSelector .service-traininfo {
+.ServiceSelector .ServiceTRAININFO {
     background: url('./assets/traininfo.png') no-repeat;
     background-size: 100%;
 }
-.ServiceSelector .service-travelinfo {
+.ServiceSelector .ServiceTRAVELINFO {
     background: url('./assets/travelinfo.png') no-repeat;
     background-size: 100%;
 }
-.ServiceSelector .service-violations {
+.ServiceSelector .ServiceVIOLATIONS {
     background: url('./assets/violations.png') no-repeat;
     background-size: 100%;
 }
-.ServiceSelector .service-weather {
+.ServiceSelector .ServiceWEATHER {
     background: url('./assets/weather.png') no-repeat;
     background-size: 100%;
 }

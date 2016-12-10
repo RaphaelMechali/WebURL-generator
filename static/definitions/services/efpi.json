@@ -1,6 +1,6 @@
 {
   "value": "efpi",
-  "label": "eFuel prices information",
+  "label": "eFuel prices",
   "tomcat-access": {
     "url": "efpi/v1",
     "port": 8092
@@ -32,7 +32,8 @@
   ],
   "applications": [
     {
-      "application": "Stations list",
+      "value": "list",
+      "label": "Stations list",
       "appendURL": "list",
       "subapplications": [
         {
@@ -41,7 +42,8 @@
         }
       ]
     },{
-      "application": "Station detail",
+      "value": "detail",
+      "label": "Station detail",
       "appendURL": "detail",
       "subapplications": [
         {

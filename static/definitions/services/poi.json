@@ -32,7 +32,8 @@
   ],
   "applications": [
     {
-      "application": "Parking list",
+      "value": "list",
+      "label": "POI list",
       "appendURL": "list",
       "subapplications": [
         {
@@ -41,7 +42,8 @@
         }
       ]
     },{
-      "application": "Parking detail",
+      "value": "list",
+      "label": "POI detail",
       "appendURL": "detail",
       "subapplications": [
         {

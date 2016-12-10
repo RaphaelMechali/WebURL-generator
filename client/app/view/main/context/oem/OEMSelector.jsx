@@ -14,9 +14,9 @@ export class OEMSelector extends Component {
 
     renderItem(oem) {
         return (
-            <div>
-                <div>{oem.label}</div>
-                <div className={`oem-picture-base oem-picture-${oem.value}`}/>
+            <div className="OEMItem">
+                <div className="OemItemLabel">{oem.label}</div>
+                <div className={`OemPictureBase OemPicture${oem.value.toUpperCase()}`}/>
             </div>
         );
     }
