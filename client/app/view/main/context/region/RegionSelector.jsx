@@ -14,8 +14,8 @@ export class RegionSelector extends Component {
 
     renderItem(region) {
         return (
-            <div className="RegionItem">
-                <div className="RegionItemLabel">{region.label}</div>
+            <div>
+                <div className="ItemLabel">{region.label}</div>
                 <div className={`RegionPictureBase RegionPicture${region.value.toUpperCase()}`}/>
             </div>
         );
@@ -23,7 +23,7 @@ export class RegionSelector extends Component {
 
     render() {
         return <PictureSelector list={this.props.regions} selectedItem={this.props.selectedRegion}
-                                containerClass="RegionSelector" buildItemView={this.renderItem}
+                                buildItemView={this.renderItem}
                                 buildSelectionAction={region => actionFactory.buildContextSelection("region", region)}/>
     }
 

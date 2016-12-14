@@ -1,0 +1,658 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service name="Parking information">
+    <backends>
+
+        <!-- app 8, all revisions and regions (does not work for japan rev1 due to special rest structure, cannot be corrected here) -->
+        <backendsEntry port="8092">
+            <withBackends>
+                <backendId>app8.direct</backendId>
+            </withBackends>
+            <urlEntries>
+                <urlEntry appendURL="parkinfo/v1"/>
+            </urlEntries>
+        </backendsEntry>
+
+        <!-- app 8 authentication, all revisions and regions -->
+        <backendsEntry id="app8.dispatcher">
+            <withBackends>
+                <backendId>app8.dispatcher</backendId>
+            </withBackends>
+            <urlEntries>
+                <urlEntry appendURL="parkinfo/v1">
+                    <forRevisions>
+                        <rev>rev1</rev>
+                        <rev>rev2</rev>
+                        <rev>rev3</rev>
+                        <rev>rev4</rev>
+                    </forRevisions>
+                </urlEntry>
+                <urlEntry appendURL="parkinfo/v3">
+                    <forRevisions>
+                        <rev>rev5</rev>
+                        <rev>rev6</rev>
+                        <rev>rev7</rev>
+                    </forRevisions>
+                </urlEntry>
+            </urlEntries>
+        </backendsEntry>
+
+        <!-- North America, Europa and Japan: TUI-5 and TUI-Demo -->
+        <backendsEntry>
+            <withBackends>
+                <backendId>tui5.dispatcher</backendId>
+                <backendId>tuidemo.dispatcher</backendId>
+            </withBackends>
+            <forRegions>
+                <region>eu_rdw</region>
+                <region>nar</region>
+                <region>jp</region>
+            </forRegions>
+            <urlEntries>
+                <urlEntry appendURL="parkinfo/v1">
+                    <forRevisions>
+                        <rev>rev1</rev>
+                        <rev>rev2</rev>
+                        <rev>rev3</rev>
+                        <rev>rev4</rev>
+                    </forRevisions>
+                </urlEntry>
+                <urlEntry appendURL="parkinfo/v3">
+                    <forRevisions>
+                        <rev>rev5</rev>
+                        <rev>rev6</rev>
+                        <rev>rev7</rev>
+                    </forRevisions>
+                </urlEntry>
+            </urlEntries>
+        </backendsEntry>
+
+        <!-- China: TUI-3 and TUI-6 -->
+        <backendsEntry>
+            <withBackends>
+                <backendId>tuichina3.dispatcher</backendId>
+                <backendId>tuichina6.dispatcher</backendId>
+            </withBackends>
+            <forRegions>
+                <region>cn</region>
+            </forRegions>
+            <urlEntries>
+                <urlEntry appendURL="parkinfo/v1">
+                    <forRevisions>
+                        <rev>rev1</rev>
+                        <rev>rev2</rev>
+                        <rev>rev3</rev>
+                        <rev>rev4</rev>
+                    </forRevisions>
+                </urlEntry>
+                <urlEntry appendURL="parkinfo/v3">
+                    <forRevisions>
+                        <rev>rev5</rev>
+                        <rev>rev6</rev>
+                        <rev>rev7</rev>
+                    </forRevisions>
+                </urlEntry>
+            </urlEntries>
+        </backendsEntry>
+
+    </backends>
+
+    <!-- Defines parameters pool for this service -->
+    <parametersPool>
+        <parameter id="sortby" label="Sort By" urlKey="sortBy">
+            <options defaultOption="0">
+                <option value="availability"/>
+                <option value="distance"/>
+                <option value="price"/>
+            </options>
+        </parameter>
+
+        <!-- Default ID in detail / preview page -->
+        <parameter id="parking.identifier" label="Park ID" urlKey="id"/>
+
+        <parameter id="parking.identifier.china" label="Park ID" urlKey="parkingId"/>
+
+        <!-- Provider header (default option is changed by access) -->
+        <parameter id="provider" label="Profile ID" urlKey="serviceProfileId" appendByDispatcher="true">
+            <options defaultOption="0">
+                <option hint="China - Audi - all" value="parkinfo_v1_autonavi"/>
+                <option hint="Audi - Europa" value="parkinfo_v1_inrix_eu"/>
+                <option hint="Audi - North america" value="parkinfo_v1_inrix_nar"/>
+                <option hint="Audi - Japan" value="parkinfo_v1_navitime"/>
+                <option hint="VW - China" value="parkinfo_v1_navinfo_china_vw"/>
+                <option hint="VW - Europa" value="parkinfo_v1_inrix_eu_vw"/>
+                <option hint="VW - North america" value="parkinfo_v1_inrix_nar_vw"/>
+                <option hint="VW - Japan - Development" value="parkinfo_v1_navitime_vw"/>
+                <option hint="VW - Japan - T&amp;I" value="NAVITIME_TUI_VW"/>
+                <option hint="VW - Japan - live" value="NAVITIME_LIVE_VW"/>
+                <option hint="VW - Japan - Prelive" value="NAVITIME_PRELIVE_VW"/>
+                <option hint="VW - Japan - Live" value="NAVITIME_LIVE_VW"/>
+            </options>
+        </parameter>
+    </parametersPool>
+
+    <subapplications>
+        <!-- Main sub application, no specific URL and parameter -->
+        <subapplication name="Main">
+            <accesses>
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev4"/>
+                        <valueRef value="rev5"/>
+                        <valueRef value="rev6"/>
+                        <valueRef value="rev7"/>
+                    </revisions>
+                    <parameters>
+                        <parameter referenceId="language"/>
+                    </parameters>
+                </access>
+            </accesses>
+        </subapplication>
+
+        <!-- List sub application -->
+        <subapplication name="List">
+            <!-- Parameters common to all sub application accesses -->
+            <parameters>
+                <parameter referenceId="latitude"/>
+                <parameter referenceId="longitude"/>
+                <parameter referenceId="distance.unit"/>
+            </parameters>
+
+            <accesses>
+                <!-- VW / rev 1 /  europa & north america access & japan -->
+                <access appendURL="list">
+                    <oems>
+                        <valueRef value="vw"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev1"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                        <valueRef value="jp"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="language" appendByDispatcher="true"/>
+                    </parameters>
+                    <headers>
+                        <parameter referenceId="provider" changeDefaultOption="5"/>
+                        <parameter referenceId="accept.language"/>
+                    </headers>
+
+                    <parameters>
+                        <parameter referenceId="sortby"/>
+                    </parameters>
+                </access>
+
+                <!-- VW / rev 1 /  china -->
+                <access appendURL="china/list">
+                    <oems>
+                        <valueRef value="vw"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev1"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="cn"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="sortby"/>
+                        <parameter referenceId="language" appendByDispatcher="true"/>
+                    </parameters>
+                    <headers>
+                        <parameter referenceId="provider" changeDefaultOption="4"/>
+                        <parameter referenceId="accept.language"/>
+                    </headers>
+                </access>
+
+                <!-- Audi / rev3 & rev 4 & rev 5 /  europa & north america access -->
+                <access appendURL="list">
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev3"/>
+                        <valueRef value="rev4"/>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                    </regions>
+                    <headers>
+                        <parameter referenceId="provider" changeDefaultOption="1"/>
+                    </headers>
+                    <parameters>
+                        <parameter referenceId="language"/>
+                        <parameter referenceId="sortby"/>
+                        <parameter referenceId="search.area"/>
+                    </parameters>
+                </access>
+                <!-- Audi / rev 4 & rev 5 /  china access, append /china in URL -->
+                <access appendURL="china/list">
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev4"/>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="cn"/>
+                    </regions>
+                    <headers>
+                        <parameter referenceId="provider" changeDefaultOption="0"/>
+                    </headers>
+                    <parameters>
+                        <parameter referenceId="language"/>
+                        <parameter referenceId="sortby">
+                            <excludeValues>
+                                <valueRef value="price"/>
+                            </excludeValues>
+                        </parameter>
+                    </parameters>
+                </access>
+
+                <!-- Audi / rev 4 & rev 5 /  japan access, append /japan in URL -->
+                <access appendURL="japan/list">
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev4"/>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="jp"/>
+                    </regions>
+                    <headers>
+                        <parameter referenceId="provider" changeDefaultOption="3"/>
+                    </headers>
+                    <parameters>
+                        <parameter referenceId="language"/>
+                        <parameter referenceId="sortby">
+                            <excludeValues>
+                                <valueRef value="price"/>
+                            </excludeValues>
+                        </parameter>
+                    </parameters>
+                </access>
+            </accesses>
+        </subapplication>
+
+        <!-- List sub application for Japan VW -->
+        <subapplication name="List Japan VW on App8" appendURL="vw/rev1/japan/list">
+            <!-- workaround should be improve -->
+            <!-- Parameters common to all sub application accesses -->
+            <parameters>
+                <parameter referenceId="latitude"/>
+                <parameter referenceId="longitude"/>
+                <parameter referenceId="language"/>
+                <parameter referenceId="distance.unit"/>
+            </parameters>
+
+            <accesses>
+
+                <!-- VW / rev 1 /  japan access -->
+                <access>
+                    <oems>
+                        <valueRef value="vw"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev1"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="jp"/>
+                    </regions>
+                    <headers>
+                        <parameter referenceId="provider" changeDefaultOption="7"/>
+                    </headers>
+                    <parameters>
+                        <parameter referenceId="sortby">
+                            <excludeValues>
+                                <valueRef value="price"/>
+                            </excludeValues>
+                        </parameter>
+                    </parameters>
+                </access>
+            </accesses>
+        </subapplication>
+
+
+        <subapplication name="Detail" appendURL="detail">
+            <!-- Common detail pages parameters -->
+            <parameters>
+                <parameter referenceId="latitude"/>
+                <parameter referenceId="longitude"/>
+            </parameters>
+
+            <accesses>
+                <!-- VW / rev 1 /  europa & north america access & japan -->
+                <access>
+                    <oems>
+                        <valueRef value="vw"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev1"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                        <valueRef value="jp"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="language" appendByDispatcher="true"/>
+                        <parameter urlKey="parkLat" label="Park. latitude"/>
+                        <parameter urlKey="parkLon" label="Park. longitude"/>
+                        <parameter referenceId="parking.identifier"/>
+                        <parameter referenceId="distance.unit"/>
+                        <parameter referenceId="html"/>
+                        <parameter referenceId="skin"/>
+                        <parameter referenceId="dephi_xresolution"/>
+                        <parameter referenceId="dephi_yresolution"/>
+                    </parameters>
+                    <headers>
+                        <parameter referenceId="provider" changeDefaultOption="5"/>
+                        <parameter referenceId="x-skin"/>
+                        <parameter referenceId="accept.language"/>
+                        <parameter referenceId="xresolution_header"/>
+                        <parameter referenceId="yresolution_header"/>
+                    </headers>
+                </access>
+
+                <!-- VW / rev 1 /  china -->
+                <access>
+                    <oems>
+                        <valueRef value="vw"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev1"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="cn"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="language" appendByDispatcher="true"/>
+                        <parameter urlKey="parkinglat" label="Park. latitude"/>
+                        <parameter urlKey="parkinglon" label="Park. longitude"/>
+                        <parameter referenceId="parking.identifier"/>
+                        <parameter referenceId="skin"/>
+                    </parameters>
+                    <headers>
+                        <parameter referenceId="provider" changeDefaultOption="4"/>
+                        <parameter referenceId="accept.language"/>
+                        <parameter referenceId="x-skin"/>
+                    </headers>
+                </access>
+
+                <!-- Audi / rev4 / europa & north america, allow HTML -->
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev4"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                    </regions>
+                    <headers>
+                        <parameter referenceId="provider" changeDefaultOption="1"/>
+                    </headers>
+                    <parameters>
+                        <parameter referenceId="language"/>
+                        <parameter referenceId="parking.identifier"/>
+                        <parameter referenceId="distance.unit"/>
+                        <parameter referenceId="html"/>
+                    </parameters>
+                </access>
+
+                <!-- Audi / rev3 / rev5 / europa & north america, forbid HTML -->
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev3"/>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                    </regions>
+                    <headers>
+                        <parameter referenceId="provider" changeDefaultOption="1"/>
+                    </headers>
+                    <parameters>
+                        <parameter referenceId="language"/>
+                        <parameter referenceId="parking.identifier"/>
+                        <parameter referenceId="distance.unit"/>
+                    </parameters>
+                </access>
+
+
+                <!-- Audi / rev4 / china, allow HTML, append china/ in URL -->
+                <access appendURL="/china">
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev4"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="cn"/>
+                    </regions>
+                    <headers>
+                        <parameter referenceId="provider"/>
+                    </headers>
+                    <parameters>
+                        <parameter referenceId="language"/>
+                        <!-- Parking ID, overwrite key in URL for china detail -->
+                        <parameter referenceId="parking.identifier.china"/>
+                        <!-- Note : Parking latitude and longitude are unused in rev4 -->
+                        <!-- Note : clock format parameter appears to be unused ! -->
+                        <!-- Note : pageIndex is used only to generate the parking ID, so no need to have it here! -->
+                        <parameter referenceId="html"/>
+                    </parameters>
+                </access>
+
+                <!-- Audi / rev5 / china, forbid HTML, append china/ in URL -->
+                <access appendURL="/china">
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="cn"/>
+                    </regions>
+                    <headers>
+                        <parameter referenceId="provider" changeDefaultOption="0"/>
+                    </headers>
+                    <parameters>
+                        <parameter referenceId="language"/>
+                        <!-- Parking ID, overwrite key in URL for china detail -->
+                        <parameter referenceId="parking.identifier.china"/>
+                        <!-- Note : clock format parameter appears to be unused ! -->
+                        <!-- Note : pageIndex is used only to generate the parking ID, so no need to have it here! -->
+                        <!-- Parking latitude and longitude, used only in china detail page -->
+                    </parameters>
+                </access>
+
+                <!-- Audi / rev4 / japan, allow HTML, append japan/ in URL -->
+                <access appendURL="/japan">
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev4"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="jp"/>
+                    </regions>
+                    <headers>
+                        <parameter referenceId="provider" changeDefaultOption="3"/>
+                    </headers>
+                    <parameters>
+                        <parameter referenceId="language"/>
+                        <parameter referenceId="parking.identifier"/>
+                        <parameter referenceId="html"/>
+                    </parameters>
+                </access>
+
+                <!-- Audi / rev5 / japan, forbid HTML, append japan/ in URL -->
+                <access appendURL="/japan">
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="jp"/>
+                    </regions>
+                    <headers>
+                        <parameter referenceId="provider" changeDefaultOption="3"/>
+                    </headers>
+                    <parameters>
+                        <parameter referenceId="language"/>
+                        <parameter referenceId="parking.identifier"/>
+                        <parameter urlKey="parkLat" label="Park. latitude"/>
+                        <parameter urlKey="parkLon" label="Park. longitude"/>
+                    </parameters>
+                </access>
+            </accesses>
+        </subapplication>
+
+        <!-- List sub application for Japan VW -->
+        <subapplication name="Detail-Japan-VW" appendURL="vw/rev1/japan/detail">
+
+            <!-- workaround should be improve -->
+            <!-- Parameters common to all sub application accesses -->
+            <parameters>
+                <parameter referenceId="latitude"/>
+                <parameter referenceId="longitude"/>
+                <parameter referenceId="language"/>
+                <parameter referenceId="distance.unit"/>
+                <parameter referenceId="parking.identifier"/>
+                <parameter urlKey="parkLat" label="Park. latitude"/>
+                <parameter urlKey="parkLon" label="Park. longitude"/>
+            </parameters>
+
+            <accesses>
+
+                <!-- VW / rev 1 /  japan access -->
+                <access>
+                    <oems>
+                        <valueRef value="vw"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev1"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="jp"/>
+                    </regions>
+                    <headers>
+                        <parameter referenceId="provider" changeDefaultOption="7"/>
+                        <parameter referenceId="x-skin"/>
+                        <parameter referenceId="xresolution_header"/>
+                        <parameter referenceId="yresolution_header"/>
+                    </headers>
+                    <parameters>
+                        <parameter referenceId="skin"/>
+                        <parameter referenceId="sortby">
+                            <excludeValues>
+                                <valueRef value="price"/>
+                            </excludeValues>
+                        </parameter>
+                        <parameter referenceId="dephi_xresolution"/>
+                        <parameter referenceId="dephi_yresolution"/>
+                    </parameters>
+                </access>
+            </accesses>
+        </subapplication>
+
+        <subapplication name="Preview" appendURL="preview">
+            <!-- Audi / rev5 / europa & north america -->
+            <parameters>
+                <parameter referenceId="language"/>
+                <!--<parameter referenceId="latitude" urlKey="slat"/>-->
+                <!--<parameter referenceId="longitude" urlKey="slon"/>-->
+                <parameter label="Park. name" urlKey="spname">
+                    <options defaultOption="0">
+                        <option value="Parking1"/>
+                    </options>
+                </parameter>
+                <parameter urlKey="splat" label="Park. latitude"/>
+                <parameter urlKey="splon" label="Park. longitude"/>
+                <parameter referenceId="search.area"/>
+                <parameter referenceId="parking.identifier"/>
+                <parameter referenceId="location"/>
+                <parameter referenceId="distance.unit"/>
+                <parameter referenceId="sortby"/>
+                <parameter label="Parking state" urlKey="sptype">
+                    <options defaultOption="0">
+                        <option value="OPEN"/>
+                    </options>
+                </parameter>
+            </parameters>
+
+            <accesses>
+                <!-- Audi / Rev5 / NAR & ECE -->
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="nar"/>
+                        <valueRef value="eu_rdw"/>
+                    </regions>
+                    <headers>
+                        <parameter referenceId="provider" changeDefaultOption="1"/>
+                    </headers>
+                </access>
+                <!-- Audi / Rev5 / China -->
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="cn"/>
+                    </regions>
+                    <headers>
+                        <parameter referenceId="provider" changeDefaultOption="0"/>
+                    </headers>
+                </access>
+                <!-- Audi / Rev5 / Japan -->
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="jp"/>
+                    </regions>
+                    <headers>
+                        <parameter referenceId="provider" changeDefaultOption="3"/>
+                    </headers>
+                </access>
+
+            </accesses>
+
+        </subapplication>
+    </subapplications>
+
+</service>

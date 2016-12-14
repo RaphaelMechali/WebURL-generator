@@ -1,0 +1,596 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service name="Online News">
+    <backends>
+
+        <!-- app 8, all revisions and regions (does not work for japan rev1 due to special rest structure, cannot be corrected here) -->
+        <backendsEntry port="8087">
+            <withBackends>
+                <backendId>app8.direct</backendId>
+            </withBackends>
+            <urlEntries>
+                <urlEntry appendURL="news"/>
+            </urlEntries>
+        </backendsEntry>
+
+        <!-- app 8 authentication, all revisions and regions -->
+        <backendsEntry id="app8.dispatcher">
+            <withBackends>
+                <backendId>app8.dispatcher</backendId>
+            </withBackends>
+            <urlEntries>
+                <urlEntry appendURL="news/v1">
+                    <forRevisions>
+                        <rev>rev3</rev>
+                    </forRevisions>
+                </urlEntry>
+                <urlEntry appendURL="news/v2">
+                    <forRevisions>
+                        <rev>rev1</rev>
+                        <rev>rev2</rev>
+                        <rev>rev4</rev>
+                    </forRevisions>
+                </urlEntry>
+                <urlEntry appendURL="news/v3">
+                    <forRevisions>
+                        <rev>rev5</rev>
+                    </forRevisions>
+                </urlEntry>
+            </urlEntries>
+        </backendsEntry>
+
+        <!-- North America, Europa and Japan: TUI-5 and TUI-Demo -->
+        <backendsEntry>
+            <withBackends>
+                <backendId>tui5.dispatcher</backendId>
+                <backendId>tuidemo.dispatcher</backendId>
+            </withBackends>
+            <forRegions>
+                <region>eu_rdw</region>
+                <region>nar</region>
+                <region>jp</region>
+            </forRegions>
+            <urlEntries>
+                <urlEntry appendURL="news/v1">
+                    <forRevisions>
+                        <rev>rev3</rev>
+                    </forRevisions>
+                </urlEntry>
+                <urlEntry appendURL="news/v2">
+                    <forRevisions>
+                        <rev>rev1</rev>
+                        <rev>rev2</rev>
+                        <rev>rev4</rev>
+                    </forRevisions>
+                </urlEntry>
+                <urlEntry appendURL="news/v3">
+                    <forRevisions>
+                        <rev>rev5</rev>
+                    </forRevisions>
+                </urlEntry>
+            </urlEntries>
+        </backendsEntry>
+
+        <!-- China: TUI-3 and TUI-6 -->
+        <backendsEntry>
+            <withBackends>
+                <backendId>tuichina3.dispatcher</backendId>
+                <backendId>tuichina6.dispatcher</backendId>
+            </withBackends>
+            <forRegions>
+                <region>cn</region>
+            </forRegions>
+            <urlEntries>
+                <urlEntry appendURL="news/v1">
+                    <forRevisions>
+                        <rev>rev3</rev>
+                    </forRevisions>
+                </urlEntry>
+                <urlEntry appendURL="news/v2">
+                    <forRevisions>
+                        <rev>rev1</rev>
+                        <rev>rev2</rev>
+                        <rev>rev4</rev>
+                    </forRevisions>
+                </urlEntry>
+                <urlEntry appendURL="news/v3">
+                    <forRevisions>
+                        <rev>rev5</rev>
+                    </forRevisions>
+                </urlEntry>
+            </urlEntries>
+        </backendsEntry>
+    </backends>
+
+    <!-- Defines parameters pool for this service -->
+    <parametersPool>
+        <parameter id="subapp" label="Subapp" urlKey="subapp"/>
+        <!-- Service configuration ID -->
+        <parameter id="service.config" label="Service ID" urlKey="serviceconfigid" appendByDispatcher="true">
+            <options defaultOption="1">
+                <!-- Chinese VW configurations, from 1 -->
+                <option hint="VW - China - TUI" value="NAVINFO_TUI_VW"/>
+                <option hint="VW - China - Pre-Live" value="NAVINFO_PRELIVE_VW"/>
+                <option hint="VW - China - Live" value="NAVINFO_LIVE_VW"/>
+
+                <!-- Japanese configurations, from 4 -->
+                <option hint="VW - Japan - TUI" value="NAVITIME_TUI_VW"/>
+                <option hint="VW - Japan - Pre-Live" value="NAVITIME_PRELIVE_VW"/>
+                <option hint="VW - Japan - Live" value="NAVITIME_LIVE_VW"/>
+            </options>
+        </parameter>
+        <!-- Moment type -->
+        <parameter id="moment.type" label="Type" urlKey="type">
+            <options defaultOption="0">
+                <option hint="Day" value="day"/>
+                <option hint="Night" value="night"/>
+            </options>
+        </parameter>
+        <!-- Backend type -->
+        <parameter label="Backend type" id="backend.type" urlKey="backend" appendByDispatcher="true">
+            <options defaultOption="0">
+                <option hint="Old DB implementation" value="old"/>
+                <option hint="New PuP implementation" value="pup"/>
+
+            </options>
+        </parameter>
+    </parametersPool>
+
+    <subapplications>
+        <!-- Main sub application, no specific URL and parameter -->
+        <subapplication name="NewsStart" appendURL="template">
+            <parameters>
+                <parameter referenceId="backend.type"/>
+                <parameter referenceId="language"/>
+            </parameters>
+            <accesses>
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                        <valueRef value="jp"/>
+                        <valueRef value="cn"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="subapp">
+                            <options defaultOption="0">
+                                <option label="NewsStart" value="NewsStart"/>
+                            </options>
+                        </parameter>
+                    </parameters>
+                </access>
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev4"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                        <valueRef value="jp"/>
+                        <valueRef value="cn"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="subapp">
+                            <options defaultOption="0">
+                                <option label="Online News Dienst" value="Online News Dienst"/>
+                            </options>
+                        </parameter>
+                    </parameters>
+                </access>
+            </accesses>
+        </subapplication>
+
+        <subapplication name="NewsFeeds" appendURL="template?subapp=NewsFeeds">
+            <parameters>
+                <parameter referenceId="language"/>
+                <parameter referenceId="backend.type"/>
+            </parameters>
+            <accesses>
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev3"/>
+                        <valueRef value="rev4"/>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                        <valueRef value="jp"/>
+                        <valueRef value="cn"/>
+                    </regions>
+                </access>
+            </accesses>
+        </subapplication>
+
+        <!-- List sub application -->
+        <subapplication name="NewsList" appendURL="template?subapp=NewsList">
+            <!-- Parameters common to all sub application accesses -->
+            <parameters>
+                <parameter referenceId="backend.type"/>
+                <parameter id="feedId" label="Feed ID" urlKey="feedId"/>
+            </parameters>
+            <accesses>
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev3"/>
+                        <valueRef value="rev4"/>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                        <valueRef value="jp"/>
+                        <valueRef value="cn"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="language"/>
+                    </parameters>
+                </access>
+                <access>
+                    <oems>
+                        <valueRef value="vw"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev1"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="language" appendByDispatcher="true"/>
+                        <parameter referenceId="dephi_xresolution"/>
+                        <parameter referenceId="dephi_yresolution"/>
+                        <parameter referenceId="skin"/>
+                        <parameter referenceId="moment.type"/>
+                    </parameters>
+                    <!-- headers -->
+                    <headers>
+                        <parameter referenceId="vin"/>
+                        <parameter referenceId="uid"/>
+                        <parameter referenceId="xresolution_header"/>
+                        <parameter referenceId="yresolution_header"/>
+                        <parameter referenceId="x-skin"/>
+                        <parameter referenceId="accept.language"/>
+                    </headers>
+                </access>
+                <access>
+                    <oems>
+                        <valueRef value="vw"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev1"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="cn"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="service.config"/>
+                        <parameter referenceId="skin"/>
+                        <parameter referenceId="moment.type"/>
+                    </parameters>
+                    <!-- headers -->
+                    <headers>
+                        <parameter referenceId="vin"/>
+                        <parameter referenceId="uid"/>
+                        <parameter referenceId="x-skin"/>
+                        <parameter referenceId="accept.language"/>
+                    </headers>
+                </access>
+                <access>
+                    <oems>
+                        <valueRef value="vw"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev1"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="jp"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="service.config" changeDefaultOption="3"/>
+                        <parameter referenceId="dephi_xresolution"/>
+                        <parameter referenceId="dephi_yresolution"/>
+                        <parameter referenceId="skin"/>
+                        <parameter referenceId="moment.type"/>
+                    </parameters>
+                    <!-- headers -->
+                    <headers>
+                        <parameter referenceId="vin"/>
+                        <parameter referenceId="uid"/>
+                        <parameter referenceId="xresolution_header"/>
+                        <parameter referenceId="yresolution_header"/>
+                        <parameter referenceId="x-skin"/>
+                        <parameter referenceId="accept.language"/>
+                    </headers>
+                </access>
+
+
+            </accesses>
+        </subapplication>
+
+        <subapplication name="Detail" appendURL="template?subapp=NewsDetail">
+            <!-- Parameters common to all sub application accesses -->
+            <parameters>
+                <parameter referenceId="backend.type"/>
+                <parameter id="feedId" label="Feed ID" urlKey="feedId"/>
+                <parameter id="itemId" label="Item ID" urlKey="itemId"/>
+            </parameters>
+            <accesses>
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev3"/>
+                        <valueRef value="rev4"/>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                        <valueRef value="jp"/>
+                        <valueRef value="cn"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="language"/>
+                    </parameters>
+                </access>
+                <access>
+                    <oems>
+                        <valueRef value="vw"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev1"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="language" appendByDispatcher="true"/>
+                        <parameter referenceId="dephi_xresolution"/>
+                        <parameter referenceId="dephi_yresolution"/>
+                        <parameter referenceId="skin"/>
+                        <parameter referenceId="moment.type"/>
+                    </parameters>
+                    <!-- headers -->
+                    <headers>
+                        <parameter referenceId="vin"/>
+                        <parameter referenceId="uid"/>
+                        <parameter referenceId="xresolution_header"/>
+                        <parameter referenceId="yresolution_header"/>
+                        <parameter referenceId="x-skin"/>
+                        <parameter referenceId="accept.language"/>
+                    </headers>
+                </access>
+                <access>
+                    <oems>
+                        <valueRef value="vw"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev1"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="cn"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="language" appendByDispatcher="true"/>
+                        <parameter referenceId="service.config"/>
+                        <parameter referenceId="skin"/>
+                        <parameter referenceId="moment.type"/>
+                    </parameters>
+                    <!-- headers -->
+                    <headers>
+                        <parameter referenceId="vin"/>
+                        <parameter referenceId="uid"/>
+                        <parameter referenceId="x-skin"/>
+                        <parameter referenceId="accept.language"/>
+                    </headers>
+                </access>
+                <access>
+                    <oems>
+                        <valueRef value="vw"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev1"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="jp"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="language" appendByDispatcher="true"/>
+                        <parameter referenceId="service.config" changeDefaultOption="3"/>
+                        <parameter referenceId="dephi_xresolution"/>
+                        <parameter referenceId="dephi_yresolution"/>
+                        <parameter referenceId="skin"/>
+                        <parameter referenceId="moment.type"/>
+                    </parameters>
+                    <!-- headers -->
+                    <headers>
+                        <parameter referenceId="vin"/>
+                        <parameter referenceId="uid"/>
+                        <parameter referenceId="xresolution_header"/>
+                        <parameter referenceId="yresolution_header"/>
+                        <parameter referenceId="x-skin"/>
+                        <parameter referenceId="accept.language"/>
+                    </headers>
+                </access>
+            </accesses>
+        </subapplication>
+        <subapplication name="NewsPreview" appendURL="template?subapp=NewsPreview">
+            <parameters>
+                <parameter referenceId="language"/>
+            </parameters>
+            <accesses>
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                        <valueRef value="jp"/>
+                        <valueRef value="cn"/>
+                    </regions>
+                </access>
+            </accesses>
+        </subapplication>
+
+        <subapplication name="DetailHTML" appendURL="template?subapp=NewsDetailEmbedded">
+            <!-- Parameters common to all sub application accesses -->
+            <parameters>
+                <parameter referenceId="language"/>
+                <parameter referenceId="backend.type"/>
+                <parameter id="feedId" label="Feed ID" urlKey="feedId"/>
+                <parameter id="itemId" label="Item ID" urlKey="itemId"/>
+            </parameters>
+            <accesses>
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev4"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                        <valueRef value="jp"/>
+                        <valueRef value="cn"/>
+                    </regions>
+                </access>
+            </accesses>
+        </subapplication>
+
+        <subapplication name="NewsChannelList" appendURL="template?subapp=NewsChannelList">
+            <!-- Parameters common to all sub application accesses -->
+            <parameters>
+                <parameter referenceId="language" appendByDispatcher="true"/>
+                <parameter referenceId="backend.type"/>
+            </parameters>
+            <accesses>
+                <access>
+                    <oems>
+                        <valueRef value="vw"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev1"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="dephi_xresolution"/>
+                        <parameter referenceId="dephi_yresolution"/>
+                        <parameter referenceId="skin"/>
+                        <parameter referenceId="moment.type"/>
+                    </parameters>
+                    <!-- headers -->
+                    <headers>
+                        <parameter referenceId="vin"/>
+                        <parameter referenceId="uid"/>
+                        <parameter referenceId="xresolution_header"/>
+                        <parameter referenceId="yresolution_header"/>
+                        <parameter referenceId="x-skin"/>
+                        <parameter referenceId="accept.language"/>
+                    </headers>
+                </access>
+                <access>
+                    <oems>
+                        <valueRef value="vw"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev1"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="cn"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="service.config"/>
+                        <parameter referenceId="skin"/>
+                        <parameter referenceId="moment.type"/>
+                    </parameters>
+                    <!-- headers -->
+                    <headers>
+                        <parameter referenceId="vin"/>
+                        <parameter referenceId="uid"/>
+                        <parameter referenceId="x-skin"/>
+                        <parameter referenceId="accept.language"/>
+                    </headers>
+                </access>
+                <access>
+                    <oems>
+                        <valueRef value="vw"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev1"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="jp"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="service.config" changeDefaultOption="3"/>
+                        <parameter referenceId="dephi_xresolution"/>
+                        <parameter referenceId="dephi_yresolution"/>
+                        <parameter referenceId="skin"/>
+                        <parameter referenceId="moment.type"/>
+                    </parameters>
+                    <!-- headers -->
+                    <headers>
+                        <parameter referenceId="vin"/>
+                        <parameter referenceId="uid"/>
+                        <parameter referenceId="xresolution_header"/>
+                        <parameter referenceId="yresolution_header"/>
+                        <parameter referenceId="x-skin"/>
+                        <parameter referenceId="accept.language"/>
+                    </headers>
+                </access>
+            </accesses>
+        </subapplication>
+
+        <subapplication name="LatestTopNews" appendURL="template?subapp=LatestTopNews">
+            <!-- Parameters common to all sub application accesses -->
+            <parameters>
+                <parameter referenceId="language"/>
+                <parameter referenceId="backend.type"/>
+            </parameters>
+            <accesses>
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev3"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                        <valueRef value="jp"/>
+                        <valueRef value="cn"/>
+                    </regions>
+                </access>
+            </accesses>
+        </subapplication>
+
+    </subapplications>
+
+</service>

@@ -6,10 +6,10 @@ import {OEMSelector} from "./oem/OEMSelector";
 import {ServiceSelector} from './service/ServiceSelector';
 import {RevisionSelector} from './revision/RevisionSelector';
 import {RegionSelector} from './region/RegionSelector';
-import {ApplicationSelector} from './application/ApplicationSelector'
-import {VerticalRule} from '../common/VerticalRule';
-
-import styles from "./ContextSelection.css";
+import {RestResourceSelector} from './resource/RestResourceSelector';
+import Divider from 'material-ui/Divider';
+import Subheader from 'material-ui/Subheader';
+import Paper from 'material-ui/Paper';
 
 export class ContextSelection extends Component {
 
@@ -19,21 +19,32 @@ export class ContextSelection extends Component {
 
     render() {
         return (
-            <div className="ContextSelection">
+            <Paper style={{width: "615px"}}>
+                <Subheader>OEM</Subheader>
                 <OEMSelector oems={this.props.dialog.availableOEMS} selectedOEM={this.props.dialog.selectedOEM}/>
-                <VerticalRule />
+                <Divider />
+                <Subheader>Service</Subheader>
                 <ServiceSelector services={this.props.dialog.availableServices}
                                  selectedService={this.props.dialog.selectedService}/>
-                <VerticalRule />
+                <Divider />
+                <Subheader>Revision</Subheader>
                 <RevisionSelector revisions={this.props.dialog.availableRevisions}
                                   selectedRevision={this.props.dialog.selectedRevision}/>
-                <VerticalRule />
+                <Divider />
+                <Subheader>Region</Subheader>
                 <RegionSelector regions={this.props.dialog.availableRegions}
                                 selectedRegion={this.props.dialog.selectedRegion}/>
-                <VerticalRule/>
-                <ApplicationSelector applications={this.props.dialog.availableApplications}
-                                     selectedApplication={this.props.dialog.selectedApplication}/>
-            </div>
+                <Divider />
+                <Subheader>Rest resource</Subheader>
+                <RestResourceSelector restResources={this.props.dialog.availableRestResources}
+                                      selectedRestResource={this.props.dialog.selectedRestResource}/>
+                <Divider />
+                <Subheader>Rest resource</Subheader>
+                <Divider />
+                <Subheader>Rest resource</Subheader>
+                <Divider />
+                <Subheader>Rest resource</Subheader>
+            </Paper>
         );
     }
 

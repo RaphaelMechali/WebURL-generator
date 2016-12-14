@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service name="Traffic violations">
+    <backends>
+
+        <!-- app 8, all revisions and regions (does not work for japan rev1 due to special rest structure, cannot be corrected here) -->
+        <backendsEntry port="8101">
+            <withBackends>
+                <backendId>app8.direct</backendId>
+            </withBackends>
+            <urlEntries>
+                <urlEntry appendURL="violations/v1"/>
+            </urlEntries>
+        </backendsEntry>
+
+        <!-- app 8 authentication -->
+        <backendsEntry id="app8.dispatcher">
+            <withBackends>
+                <backendId>app8.dispatcher</backendId>
+            </withBackends>
+            <urlEntries>
+                <urlEntry appendURL="violations/v2">
+                    <forRevisions>
+                        <rev>rev4</rev>
+                    </forRevisions>
+                </urlEntry>
+                <urlEntry appendURL="violations/v3">
+                    <forRevisions>
+                        <rev>rev5</rev>
+                    </forRevisions>
+                </urlEntry>
+            </urlEntries>
+        </backendsEntry>
+
+        <!-- China: TUI-3 and TUI-6 -->
+        <backendsEntry>
+            <withBackends>
+                <backendId>tuichina3.dispatcher</backendId>
+                <backendId>tuichina6.dispatcher</backendId>
+            </withBackends>
+            <forRegions>
+                <region>cn</region>
+            </forRegions>
+            <urlEntries>
+                <urlEntry appendURL="violations/v2">
+                    <forRevisions>
+                        <rev>rev4</rev>
+                    </forRevisions>
+                </urlEntry>
+                <urlEntry appendURL="violations/v3">
+                    <forRevisions>
+                        <rev>rev5</rev>
+                    </forRevisions>
+                </urlEntry>
+            </urlEntries>
+        </backendsEntry>
+
+    </backends>
+
+    <!-- Defines parameters pool for this service -->
+    <parametersPool>
+        <parameter id="provider" label="Profile ID" urlKey="serviceProfileId" appendByDispatcher="true">
+            <options defaultOption="0">
+                <option hint="Faw - tests" value="violations_v1_faw"/>
+                <option hint="Faw - pre" value="violations_v1_faw_pre"/>
+            </options>
+        </parameter>
+    </parametersPool>
+
+    <subapplications>
+        <!-- Main sub application, no specific URL and parameter -->
+        <subapplication name="Main">
+            <accesses>
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev4"/>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="cn"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="language"/>
+                    </parameters>
+                </access>
+            </accesses>
+        </subapplication>
+
+        <!-- List sub application -->
+        <subapplication name="List" appendURL="list">
+            <accesses>
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev4"/>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="cn"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="language"/>
+                        <parameter referenceId="html"/>
+                    </parameters>
+                    <headers>
+                        <parameter referenceId="vin">
+                            <options defaultOption="0">
+                                <option hint="Working VIN" value="WAU9FC8KXDA102657"/>
+                            </options>
+                        </parameter>
+                        <parameter referenceId="provider" changeDefaultOption="1"/>
+                    </headers>
+                </access>
+            </accesses>
+        </subapplication>
+    </subapplications>
+</service>

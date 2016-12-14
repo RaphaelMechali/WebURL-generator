@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<parameters>
+
+    <!-- Filtering parameters (required), retrieved by their ID-->
+
+    <!-- Manufacturer -->
+    <parameter id="manufacturer" label="Manufacturer" urlKey="oem" appendByDispatcher="true">
+        <options defaultOption="0">
+            <option hint="Audi" value="audi"/>
+            <option hint="Bentley" value="bentley"/>
+            <option hint="Porsche" value="porsche"/>
+            <option hint="Skoda" value="skoda"/>
+            <option hint="Volkswagen" value="vw"/>
+        </options>
+    </parameter>
+
+    <!-- Revision -->
+    <parameter id="revision" label="Revision" urlKey="rev" appendByDispatcher="true">
+        <options defaultOption="2">
+            <option hint="Revision 1" value="rev1"/>
+            <option hint="Revision 2" value="rev2"/>
+            <option hint="Revision 3" value="rev3"/>
+            <option hint="Revision 4" value="rev4"/>
+            <option hint="Revision 5" value="rev5"/>
+            <option hint="Revision 6" value="rev6"/>
+            <option hint="Revision 7" value="rev7"/>
+            <option hint="Revision 8" value="rev8"/>
+            <option hint="MIB2+/D5" value="d5" />
+        </options>
+    </parameter>
+
+    <!-- Market -->
+    <parameter id="market" label="Market" urlKey="hu_region" appendByDispatcher="true">
+        <options defaultOption="1">
+            <option hint="China" value="cn"/>
+            <option hint="Europa" value="eu_rdw"/>
+            <option hint="Japan" value="jp"/>
+            <option hint="North America" value="nar"/>
+        </options>
+        <alternativeValues>
+            <alterValue when="cn" then="chn">
+                <inContext>
+                    <!-- parameters can be referenced by name or URL key. Do not use ID as it is transient and therefore conditions cannot be resolved at runtime! That mechanism can be used inside services definition -->
+                    <parameterIs parameter="oem" value="vw"/>
+                </inContext>
+            </alterValue>
+        </alternativeValues>
+    </parameter>
+
+
+    <!-- Parameters that are common to many services (can be used by referenceId in services parameters definition )-->
+
+    <!-- Latitude -->
+    <parameter id="latitude" label="Latitude" urlKey="lat">
+        <edition type="mapselector" sub-type="latitude"/>
+    </parameter>
+
+    <!-- Longitude -->
+    <parameter id="longitude" label="Longitude" urlKey="lon">
+        <edition type="mapselector" sub-type="longitude"/>
+    </parameter>
+
+    <!-- Location -->
+    <parameter id="location" label="Location" urlKey="location">
+        <edition type="mapselector" sub-type="town"/>
+    </parameter>
+
+    <!-- Search area -->
+    <parameter id="search.area" label="Search Area" urlKey="searchArea">
+        <options defaultOption="0">
+            <option value="Nearby"/>
+            <option value="AtDestination"/>
+            <option value="AtStopover"/>
+        </options>
+    </parameter>
+
+    <!-- Language -->
+    <parameter id="language" label="Language" urlKey="lan">
+        <options defaultOption="4">
+            <option hint="German" value="de_DE"/>
+            <option hint="English - China" value="en_CN"/>
+            <option hint="English - UK" value="en_GB"/>
+            <option hint="English - Japan" value="en_JP"/>
+            <option hint="English - USA" value="en_US"/>
+            <option hint="French" value="fr_FR"/>
+            <option hint="Japanese" value="ja_JP"/>
+            <option hint="Chinese (Simplified)" value="zh_CN"/>
+            <option hint="Chinese (Traditonal)" value="zh_HK"/>
+            <option hint="Chinese (Hongkong)" value="hk_CN"/>
+        </options>
+    </parameter>
+
+
+    <!-- Accept Language as header -->
+    <parameter id="accept.language" label="Accept Language" urlKey="Accept-Language" consumedByDispatcher="true">
+        <options defaultOption="4">
+            <option hint="German" value="de_DE"/>
+            <option hint="English - China" value="en_CN"/>
+            <option hint="English - UK" value="en_GB"/>
+            <option hint="English - Japan" value="en_JP"/>
+            <option hint="English - USA" value="en_US"/>
+            <option hint="French" value="fr_FR"/>
+            <option hint="Japanese" value="ja_JP"/>
+            <option hint="Chinese (Simplified)" value="zh_CN"/>
+            <option hint="Chinese (Traditonal)" value="zh_HK"/>
+            <option hint="Chinese (Hongkong)" value="hk_CN"/>
+        </options>
+    </parameter>
+
+    <!-- In html -->
+    <parameter id="html" label="In HTML" urlKey="inHtml">
+        <options defaultOption="0">
+            <option value="false"/>
+            <option value="true"/>
+        </options>
+    </parameter>
+
+    <!-- Resolution overloading -->
+    <parameter id="dephi_xresolution" label="X res." urlKey="delphi_xres" appendByDispatcher="true">
+        <options defaultOption="0">
+            <option hint="VW - Default" value="800"/>
+            <option hint="VW - GP" value="1280"/>
+        </options>
+    </parameter>
+    <parameter id="dephi_yresolution" label="Y res." urlKey="delphi_yres" appendByDispatcher="true">
+        <options defaultOption="0">
+            <option hint="VW - Default" value="480"/>
+            <option hint="VW - GP" value="640"/>
+        </options>
+    </parameter>
+
+    <parameter id="xresolution_header" label="X res." urlKey="X-XRES" consumedByDispatcher="true">
+        <options defaultOption="0">
+            <option hint="VW - Default" value="800"/>
+            <option hint="VW - GP" value="1280"/>
+        </options>
+    </parameter>
+    <parameter id="yresolution_header" label="Y res." urlKey="X-YRES" consumedByDispatcher="true">
+        <options defaultOption="0">
+            <option hint="VW - Default" value="480"/>
+            <option hint="VW - GP" value="640"/>
+        </options>
+    </parameter>
+
+    <parameter id="xresolution_parameter" label="X res." urlKey="xres" appendByDispatcher="true">
+        <options defaultOption="0">
+            <option hint="VW - Default" value="800"/>
+            <option hint="VW - GP" value="1280"/>
+        </options>
+    </parameter>
+    <parameter id="yresolution_parameter" label="Y res." urlKey="yres" appendByDispatcher="true">
+        <options defaultOption="0">
+            <option hint="VW - Default" value="480"/>
+            <option hint="VW - GP" value="640"/>
+        </options>
+    </parameter>
+
+    <!-- SDS -->
+    <parameter id="sds" label="SDS" urlKey="sds" appendByDispatcher="true">
+        <options defaultOption="0">
+            <option hint="True" value="true"/>
+            <option hint="False" value="false"/>
+        </options>
+    </parameter>
+
+    <!-- TTS -->
+    <parameter id="tts" label="TTS" urlKey="tts" appendByDispatcher="true">
+        <options defaultOption="0">
+            <option hint="True" value="true"/>
+            <option hint="False" value="false"/>
+        </options>
+    </parameter>
+
+    <parameter id="ttsinlists" label="TTS in list" urlKey="ttsinlists" appendByDispatcher="true">
+        <options defaultOption="0">
+            <option hint="True" value="true"/>
+            <option hint="False" value="false"/>
+        </options>
+    </parameter>
+
+    <parameter id="ttsmaxlength" label="TTS max length" urlKey="tts_max_length" appendByDispatcher="true">
+        <options defaultOption="0">
+            <option value="10000"/>
+        </options>
+    </parameter>
+
+    <!-- Distance unit -->
+    <parameter id="distance.unit" label="Distance in" urlKey="unitDist">
+        <options defaultOption="0">
+            <option label="kilometers" value="km"/>
+            <option label="miles" value="mi"/>
+        </options>
+    </parameter>
+
+    <!-- Ambient -->
+    <parameter id="ambient" label="Ambient" urlKey="ambient" appendByDispatcher="true">
+        <options defaultOption="0">
+            <option label="red" value="FF0000"/>
+            <option label="green" value="00FF00"/>
+            <option label="blue" value="0000FF"/>
+            <option label="yellow" value="FFFF00"/>
+            <option label="grey" value="CCEEFF"/>
+        </options>
+    </parameter>
+
+    <!-- Model -->
+    <parameter id="model" label="Model" urlKey="model" appendByDispatcher="true">
+        <options defaultOption="0">
+            <option label="QPHEV" value="QPHEV"/>
+            <option label="C7PA-QPHEV" value="C7PA-QPHEV"/>
+            <option label="NOTELECTRIC" value="NOTELECTRIC"/>
+        </options>
+    </parameter>
+
+    <!-- VW header ambient color -->
+    <parameter id="x-color" label="Color" urlKey="X-Color" consumedByDispatcher="true">
+        <options defaultOption="0">
+            <option label="red" value="FF0000"/>
+            <option label="green" value="00FF00"/>
+            <option label="blue" value="0000FF"/>
+            <option label="yellow" value="FFFF00"/>
+            <option label="grey" value="CCEEFF"/>
+        </options>
+    </parameter>
+
+    <!-- Car VIN -->
+    <parameter id="vin" label="Vehicle ID" urlKey="X-VIN">
+        <options defaultOption="0">
+            <option hint="VW - App8 - JP VIN 1" value="WVWMBBVTTLSJP0002"/>
+        </options>
+    </parameter>
+
+    <!-- User ID -->
+    <parameter id="uid" label="User ID" urlKey="X-UID">
+        <options defaultOption="0">
+            <option hint="VW - App8 - JP ID 1" value="4"/>
+        </options>
+    </parameter>
+
+    <!-- VW parameter skin -->
+    <parameter label="Skin" urlKey="skin" id="skin" appendByDispatcher="true">
+        <options defaultOption="0">
+            <option hint="Default" value="1"/>
+            <option hint="Sport" value="2"/>
+            <option hint="CN (high)" value="high_vw_skin_chn"/>
+            <option hint="CN (standard)" value="std_vw_skin_chn"/>
+            <option hint="CN (standard PQ)" value="std_vw_pq_skin_chn"/>
+        </options>
+    </parameter>
+
+    <!-- VW header skin -->
+    <parameter id="x-skin" label="Skin" urlKey="X-SKIN" consumedByDispatcher="true">
+        <options defaultOption="0">
+            <option hint="Default" value="1"/>
+            <option hint="Sport" value="2"/>
+            <option hint="CN (high)" value="high_vw_skin_chn"/>
+            <option hint="CN (standard)" value="std_vw_skin_chn"/>
+            <option hint="CN (standard PQ)" value="std_vw_pq_skin_chn"/>
+        </options>
+    </parameter>
+
+    <!-- Paging start index, for the paging management system in revision 5 -->
+    <parameter label="Paging start index" urlKey="pagingStartIndex" id="paging.start.index">
+        <options defaultOption="0">
+            <option hint="First provider value" value="0"/>
+        </options>
+    </parameter>
+
+    <!-- Paging link, for page management for revisions 4, 6, 7, others? -->
+    <parameter label="Paging link" urlKey="pagingLink" id="paging.link"/>
+
+    <!-- Miniapp parameter: is in mini app state? -->
+    <parameter label="Mini app." urlKey="miniapp" id="mini.app">
+        <options defaultOption="1">
+            <option value="true"/>
+            <option value="false"/>
+        </options>
+    </parameter>
+
+</parameters>

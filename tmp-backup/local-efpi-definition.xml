@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service name="Charging Stations">
+    <backends>
+
+        <!-- app 8 -->
+        <backendsEntry port="9004">
+            <withBackends>
+                <backendId>app8.direct</backendId>
+            </withBackends>
+            <forRegions>
+                <region>eu_rdw</region>
+                <region>nar</region>
+                <region>jp</region>
+                <region>cn</region>
+            </forRegions>
+            <urlEntries>
+                <urlEntry appendURL="efpi"/>
+            </urlEntries>
+        </backendsEntry>
+
+        <!-- TODO could be even more concise if backend ID is defined at same time with
+        its regions, since provisioning is, most of time, similarly implemented in different regions -->
+
+        <!-- app 8 authentication, TUI-5 and TUI Demo for Japan and Europa -->
+        <backendsEntry id="app8.dispatcher">
+            <withBackends>
+                <backendId>app8.dispatcher</backendId>
+                <backendId>tui5.dispatcher</backendId>
+                <backendId>tuidemo.dispatcher</backendId>
+            </withBackends>
+            <forRegions>
+                <region>eu_rdw</region>
+                <region>nar</region>
+                <region>jp</region>
+            </forRegions>
+            <urlEntries>
+                <urlEntry appendURL="echarge/v1/">
+                    <forRevisions>
+                        <rev>rev4</rev>
+                        <rev>rev5</rev>
+                    </forRevisions>
+                </urlEntry>
+                <urlEntry appendURL="echarge/v2/">
+                    <forRevisions>
+                        <rev>rev1</rev>
+                    </forRevisions>
+                </urlEntry>
+            </urlEntries>
+        </backendsEntry>
+
+        <backendsEntry>
+            <withBackends>
+                <backendId>tuichina3.dispatcher</backendId>
+                <backendId>tuichina6.dispatcher</backendId>
+            </withBackends>
+            <forRegions>
+                <region>cn</region>
+            </forRegions>
+            <urlEntries>
+                <urlEntry appendURL="efpi/v2">
+                    <forRevisions>
+                        <rev>rev4</rev>
+                        <rev>rev5</rev>
+                    </forRevisions>
+                </urlEntry>
+            </urlEntries>
+        </backendsEntry>
+
+    </backends>
+
+    <!-- Common parameters -->
+    <parametersPool>
+        <parameter id="service.configuration" label="Data profile" urlKey="serviceconfigid" appendByDispatcher="true">
+            <options defaultOption="0">
+                <!-- Audi -->
+                <option hint="EU - Audi" value="ECEAUDICHARGE"/>
+                <option hint="Navitime - Audi" value="JPAUDICHARGE"/>
+                <option hint="Autonavi - Audi" value="CNAUDICHARGE"/>
+                <!-- Volkswagen -->
+                <option hint="EU - VW" value="ECEVWCHARGE"/>
+            </options>
+        </parameter>
+        <parameter id="order" label="Sort by" urlKey="orderby">
+            <options defaultOption="0">
+                <option value="price"/>
+                <option value="distance"/>
+            </options>
+        </parameter>
+    </parametersPool>
+    <subapplications>
+        <!-- Main sub application -->
+        <subapplication name="Main" appendURL="?">
+            <accesses>
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev4"/>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                        <valueRef value="jp"/>
+                        <valueRef value="cn"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="language"/>
+                    </parameters>
+                </access>
+            </accesses>
+        </subapplication>
+
+        <!-- List sub application -->
+        <subapplication name="List" appendURL="list?">
+            <parameters>
+                <parameter referenceId="service.configuration"/>
+                <parameter referenceId="latitude" name="Search latitude"/>
+                <parameter referenceId="longitude" name="Search longitude"/>>
+                <parameter referenceId="order"/>
+                <parameter referenceId="distance.unit"/>
+            </parameters>
+            <accesses>
+                <access>
+                    <oems>
+                        <valueRef value="vw"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev1"/>
+                        <valueRef value="rev2"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                        <valueRef value="jp"/>
+                        <valueRef value="cn"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="language" appendByDispatcher="true"/>
+                    </parameters>
+                    <headers>
+                        <parameter referenceId="x-skin"/>
+                        <parameter referenceId="accept.language"/>
+                    </headers>
+                </access>
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev4"/>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                        <valueRef value="jp"/>
+                        <valueRef value="cn"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="language"/>
+                    </parameters>
+                </access>
+            </accesses>
+        </subapplication>
+
+
+        <!-- Detail sub application -->
+        <subapplication name="Detail" appendURL="detail?">
+
+            <!-- Parameters common to all accesses -->
+            <parameters>
+                <parameter referenceId="service.configuration"/>
+                <parameter referenceId="latitude"/>
+                <parameter referenceId="longitude"/>
+                <parameter urlKey="id" label="Station ID"/>
+                <parameter referenceId="distance.unit"/>
+            </parameters>
+
+            <accesses>
+                <!-- rev1 and rev2 -->
+                <access>
+                    <oems>
+                        <valueRef value="vw"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev1"/>
+                        <valueRef value="rev2"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                        <valueRef value="jp"/>
+                        <valueRef value="cn"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="language" appendByDispatcher="true"/>
+                    </parameters>
+                    <headers>
+                        <parameter referenceId="x-skin"/>
+                        <parameter referenceId="accept.language"/>
+                    </headers>
+                </access>
+
+                <!-- rev4 to rev5 -->
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev4"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                        <valueRef value="jp"/>
+                        <valueRef value="cn"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="language"/>
+                        <parameter referenceId="html"/>
+                    </parameters>
+                </access>
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                        <valueRef value="jp"/>
+                        <valueRef value="cn"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="language"/>
+                    </parameters>
+                </access>
+            </accesses>
+        </subapplication>
+
+    </subapplications>
+
+</service>

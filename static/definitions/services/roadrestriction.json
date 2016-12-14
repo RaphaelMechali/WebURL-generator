@@ -1,38 +1,23 @@
 {
-  "value": "roadrestriction",
-  "label": "Road restrictions",
-  "tomcat-access": {
-    "url": "roadrestrictions/v1",
-    "port": 9999
-  },
-  "dispatcher-access": [
+  "value": "roadrestriction", "label": "Road restrictions", "tomcat-access": {
+  "url": "roadrestrictions/v1", "port": 9999
+}, "dispatcher-access": [
+  {
+    "revisions": [
+      "rev4", "rev5"
+    ], "url": "roadrestrictions/v3"
+  }, {
+    "revisions": [
+      "d5"
+    ], "url": "roadrestrictions/v4"
+  }
+], "restResources": [
+  {
+    "value": "list", "label": "Restrictions list", "appendURL": "list", "accesses": [
     {
-      "revisions": [
-        "rev4",
-        "rev5"
-      ],
-      "url": "roadrestrictions/v3"
-    },
-    {
-      "revisions": [
-        "d5"
-      ],
-      "url": "roadrestrictions/v4"
-    }
-  ],
-  "applications": [
-    {
-      "value": "list",
-      "label": "Restrictions list",
-      "appendURL": "list",
-      "subapplications": [
-        {
-          "regions": ["cn"],
-          "revisions": ["rev4", "rev5", "d5"],
-          "parameters": [],
-          "headers": []
-        }
-      ]
+      "regions": ["cn"], "revisions": ["rev4", "rev5", "d5"], "parameters": [], "headers": []
     }
   ]
+  }
+]
 }

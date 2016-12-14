@@ -1,38 +1,23 @@
 {
-  "value": "violations",
-  "label": "Traffic violations",
-  "tomcat-access": {
-    "url": "parkinfo/v1",
-    "port": 8092
-  },
-  "dispatcher-access": [
+  "value": "violations", "label": "Traffic violations", "tomcat-access": {
+  "url": "parkinfo/v1", "port": 8092
+}, "dispatcher-access": [
+  {
+    "revisions": [
+      "rev4", "rev5"
+    ], "url": "violations/v3"
+  }, {
+    "revisions": [
+      "d5"
+    ], "url": "violations/v4"
+  }
+], "restResources": [
+  {
+    "value": "list", "label": "Violations list", "appendURL": "list", "accesses": [
     {
-      "revisions": [
-        "rev4",
-        "rev5"
-      ],
-      "url": "violations/v3"
-    },
-    {
-      "revisions": [
-        "d5"
-      ],
-      "url": "violations/v4"
-    }
-  ],
-  "applications": [
-    {
-      "value": "list",
-      "label": "Violations list",
-      "appendURL": "list",
-      "subapplications": [
-        {
-          "regions": ["cn"],
-          "revisions": ["rev4", "rev5", "d5"],
-          "parameters": [],
-          "headers": []
-        }
-      ]
+      "regions": ["cn"], "revisions": ["rev4", "rev5", "d5"], "parameters": [], "headers": []
     }
   ]
+  }
+]
 }

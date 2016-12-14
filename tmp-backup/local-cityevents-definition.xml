@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service name="City events">
+    <backends>
+        <!-- app 8, all revisions and regions -->
+        <backendsEntry port="8086">
+            <withBackends>
+                <backendId>app8.direct</backendId>
+            </withBackends>
+            <urlEntries>
+                <urlEntry appendURL="eventlocations/v1"/>
+            </urlEntries>
+        </backendsEntry>
+
+        <!-- North America, Europa and Japan: TUI-5 and TUI-Demo -->
+        <backendsEntry>
+            <withBackends>
+                <backendId>tui5.dispatcher</backendId>
+                <backendId>tuidemo.dispatcher</backendId>
+            </withBackends>
+            <forRegions>
+                <region>eu_rdw</region>
+                <region>nar</region>
+                <region>jp</region>
+            </forRegions>
+            <urlEntries>
+                <urlEntry appendURL="cityevents/v1">
+                    <forRevisions>
+                        <rev>rev3</rev>
+                        <rev>rev4</rev>
+                    </forRevisions>
+                </urlEntry>
+                <urlEntry appendURL="cityevents/v3">
+                    <forRevisions>
+                        <rev>rev5</rev>
+                        <rev>rev6</rev>
+                        <rev>rev7</rev>
+                    </forRevisions>
+                </urlEntry>
+            </urlEntries>
+        </backendsEntry>
+
+        <!-- China: TUI-3 and TUI-6 -->
+        <backendsEntry>
+            <withBackends>
+                <backendId>tuichina3.dispatcher</backendId>
+                <backendId>tuichina6.dispatcher</backendId>
+            </withBackends>
+            <forRegions>
+                <region>cn</region>
+            </forRegions>
+            <urlEntries>
+                <urlEntry appendURL="cityevents/v1">
+                    <forRevisions>
+                        <rev>rev3</rev>
+                        <rev>rev4</rev>
+                    </forRevisions>
+                </urlEntry>
+                <urlEntry appendURL="cityevents/v3">
+                    <forRevisions>
+                        <rev>rev5</rev>
+                        <rev>rev6</rev>
+                        <rev>rev7</rev>
+                    </forRevisions>
+                </urlEntry>
+            </urlEntries>
+        </backendsEntry>
+    </backends>
+
+    <!-- Defines parameters pool for this service -->
+    <parametersPool>
+        <!-- config ID header -->
+        <parameter id="config.id" label="Configuration" urlKey="serviceProfileId" appendByDispatcher="true">
+            <options>
+                <option hint="Audi - ECE" value="cityevents_v1_ipublish"/>
+                <option hint="Audi - JP" value="cityevents_v1_wcities"/>
+                <option hint="Audi - CN" value="cityevents_v1_autonavi"/>
+            </options>
+        </parameter>
+        <!-- category parameter -->
+        <parameter id="category" label="Category" urlKey="category">
+            <options defaultOption="0">
+                <option hint="All" value="all"/>
+                <option hint="Art and culture" value="art"/>
+                <option hint="Festival" value="festival"/>
+                <option hint="Sport and beer" value="sport"/>
+                <option hint="Family" value="family"/>
+                <option hint="Concert" value="concert"/>
+                <option hint="Night" value="night"/>
+                <option hint="Education" value="education"/>
+                <option hint="Various" value="various"/>
+            </options>
+        </parameter>
+
+    </parametersPool>
+
+    <subapplications>
+
+        <!-- Main sub application -->
+        <subapplication name="Main">
+            <accesses>
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev4"/>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <parameters>
+                        <parameter referenceId="language"/>
+                    </parameters>
+                </access>
+            </accesses>
+        </subapplication>
+
+        <!-- List sub application -->
+        <subapplication name="List" appendURL="eventlist">
+
+            <!-- Common parameters -->
+            <parameters>
+                <parameter referenceId="language" appendByDispatcher="false"/>
+                <parameter referenceId="latitude"/>
+                <parameter referenceId="longitude"/>
+                <parameter referenceId="category"/>
+                <parameter referenceId="tts"/>
+                <parameter referenceId="ttsinlists"/>
+                <parameter referenceId="ttsmaxlength"/>
+                <parameter referenceId="sds"/>
+            </parameters>
+            <accesses>
+                <!-- ECE / NAR (default provider selection) -->
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev4"/>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                    </regions>
+                    <headers>
+                        <parameter referenceId="config.id" changeDefaultOption="0"/>
+                    </headers>
+                </access>
+
+                <!-- JP (default provider selection) -->
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev4"/>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="jp"/>
+                    </regions>
+                    <headers>
+                        <parameter referenceId="config.id" changeDefaultOption="1"/>
+                    </headers>
+                </access>
+
+                <!-- CN (default provider selection) -->
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev4"/>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="cn"/>
+                    </regions>
+                    <headers>
+                        <parameter referenceId="config.id" changeDefaultOption="2"/>
+                    </headers>
+                </access>
+            </accesses>
+        </subapplication>
+
+        <!-- Detail sub application -->
+        <subapplication name="Detail" appendURL="eventdetail">
+
+            <!-- Common parameters -->
+            <parameters>
+                <parameter referenceId="language"/>
+                <parameter referenceId="latitude"/>
+                <parameter referenceId="longitude"/>
+                <parameter referenceId="category"/>
+                <parameter referenceId="tts"/>
+                <parameter referenceId="ttsmaxlength"/>
+                <parameter referenceId="sds"/>
+                <parameter label="Event ID" urlKey="id"/>
+            </parameters>
+            <accesses>
+                <!-- ECE / NAR (default provider selection) -->
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev4"/>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                    </regions>
+                    <headers>
+                        <parameter referenceId="config.id" changeDefaultOption="0"/>
+                    </headers>
+                </access>
+
+                <!-- JP (default provider selection) -->
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev4"/>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="jp"/>
+                    </regions>
+                    <headers>
+                        <parameter referenceId="config.id" changeDefaultOption="1"/>
+                    </headers>
+                </access>
+
+                <!-- CN (default provider selection) -->
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev4"/>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="cn"/>
+                    </regions>
+                    <headers>
+                        <parameter referenceId="config.id" changeDefaultOption="2"/>
+                    </headers>
+                </access>
+            </accesses>
+        </subapplication>
+
+    </subapplications>
+
+</service>
+        <!-- Some URL
+        category list
+        http://demdc-pr-mbb-app8.de.valtech.com:8086/eventlocations/v1/categorylist?lan=en_CN
+
+        main (dispatcher)
+        http://mib-tx.vw.mbb6.valtech.de/mbb/cityeventscn/v1/?rev=rev4&lan=en_CN&hint=true&hu_region=cn
+        -->

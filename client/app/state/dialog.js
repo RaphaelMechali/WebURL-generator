@@ -157,10 +157,10 @@ function filterRegions(definitionModel, nextState) {
         return obj;
     }, {});
 
-    // collect regions (once only, in a set) that are defined in sub applications
+    // collect regions (once only, in a set) that are defined in rest resource accesses
     // Note: when a subapplication does not define any region / revision, it is considered defined for all
     let availableRegions = new Set();
-    selectedService.applications.forEach(app => app.subapplications.forEach(subapp => {
+    selectedService.restResources.forEach(app => app.accesses.forEach(subapp => {
         let regions = !subapp.regions ? definitionModel.regions :
             subapp.regions.map(regionID => regionMapping[regionID]);
         regions.forEach(r => availableRegions.add(r));
@@ -171,22 +171,22 @@ function filterRegions(definitionModel, nextState) {
 }
 
 /**
- * Filters valid applications for selected service / revision and region
+ * Filters valid rest resources for selected service / revision and region
  * @param definitionModel definition model (unused here)
  * @param nextState next state holding current selection
- * @returns Array with available subapplications
+ * @returns Array with available accesses
  */
-function filterApplications(definitionModel, nextState) {
+function filterRestResources(definitionModel, nextState) {
     let selectedService = nextState.selectedService,
         selectedRevision = nextState.selectedRevision,
         selectedRegion = nextState.selectedRegion;
 
-    // return filtered applications, where each application has at least one sub application for selected region / revision
-    // note : when no regions attribute is defined in sub application, all are considered valid (also worth for revision)
-    return selectedService.applications.filter(app => app.subapplications.some(
-        subapplication =>
-        (!subapplication.regions || subapplication.regions.includes(selectedRegion.value)) &&
-        (!subapplication.revisions || subapplication.revisions.includes(selectedRevision.value)))
+    // return filtered rest resources, where each resource has at least one access for selected region / revision
+    // note : when no regions attribute is defined in resource access, all are considered valid (also worth for revision)
+    return selectedService.restResources.filter(app => app.accesses.some(
+        access =>
+        (!access.regions || access.regions.includes(selectedRegion.value)) &&
+        (!access.revisions || access.revisions.includes(selectedRevision.value)))
     );
 }
 
@@ -200,9 +200,10 @@ const contextSettersChain = [
     new ChainSetter("revision", "selectedRevision", "availableRevisions", filterRevisions),
     // 4 - Market
     new ChainSetter("region", "selectedRegion", "availableRegions", filterRegions),
-    // 5 - Application
-    new ChainSetter("application", "selectedApplication", "availableApplications", filterApplications)
+    // 5 - Rest resource
+    new ChainSetter("restResource", "selectedRestResource", "availableRestResources", filterRestResources)
     // "backend"
+    // TODO
 ];
 
 

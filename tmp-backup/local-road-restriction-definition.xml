@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service name="Road restriction">
+    <backends>
+
+        <!-- app 8, all revisions and regions (does not work for japan rev1 due to special rest structure, cannot be corrected here) -->
+        <backendsEntry port="8100">
+            <withBackends>
+                <backendId>app8.direct</backendId>
+            </withBackends>
+            <urlEntries>
+                <urlEntry appendURL="roadrestriction/v1"/>
+            </urlEntries>
+        </backendsEntry>
+
+        <!-- app 8 authentication -->
+        <backendsEntry id="app8.dispatcher">
+            <withBackends>
+                <backendId>app8.dispatcher</backendId>
+            </withBackends>
+            <urlEntries>
+                <urlEntry appendURL="roadrestriction/v2">
+                    <forRevisions>
+                        <rev>rev4</rev>
+                    </forRevisions>
+                </urlEntry>
+                <urlEntry appendURL="roadrestriction/v3">
+                    <forRevisions>
+                        <rev>rev5</rev>
+                    </forRevisions>
+                </urlEntry>
+                <urlEntry appendURL="roadrestriction/v4">
+                    <forRevisions>
+                        <rev>d5</rev>
+                    </forRevisions>
+                </urlEntry>
+            </urlEntries>
+        </backendsEntry>
+
+        <!-- China: TUI-3 and TUI-6 -->
+        <backendsEntry>
+            <withBackends>
+                <backendId>tuichina3.dispatcher</backendId>
+                <backendId>tuichina6.dispatcher</backendId>
+            </withBackends>
+            <forRegions>
+                <region>cn</region>
+            </forRegions>
+            <urlEntries>
+                <urlEntry appendURL="roadrestriction/v2">
+                    <forRevisions>
+                        <rev>rev4</rev>
+                    </forRevisions>
+                </urlEntry>
+                <urlEntry appendURL="roadrestriction/v3">
+                    <forRevisions>
+                        <rev>rev5</rev>
+                    </forRevisions>
+                </urlEntry>
+                <urlEntry appendURL="roadrestriction/v4">
+                    <forRevisions>
+                        <rev>d5</rev>
+                    </forRevisions>
+                </urlEntry>
+            </urlEntries>
+        </backendsEntry>
+
+    </backends>
+
+    <subapplications>
+        <!-- Main sub application, no specific URL and parameter -->
+        <subapplication name="Main">
+            <accesses>
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev4"/>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="cn"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="language"/>
+                    </parameters>
+                </access>
+            </accesses>
+        </subapplication>
+
+        <!-- List sub application -->
+        <subapplication name="Detail" appendURL="detail">
+            <accesses>
+                <!-- Audi / rev 4 /  china (single) access -->
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev4"/>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="cn"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="latitude"/>
+                        <parameter referenceId="longitude"/>
+                        <parameter referenceId="language" changeDefaultOption="1"/>
+                        <parameter referenceId="html"/>
+                        <parameter referenceId="location" urlKey="town"/>
+                    </parameters>
+                    <headers>
+                        <parameter referenceId="vin">
+                            <options defaultOption="0">
+                                <option hint="Working VIN" value="WAU9FC8K5DA105966"/>
+                            </options>
+                        </parameter>
+                    </headers>
+                </access>
+            </accesses>
+        </subapplication>
+
+        <!-- List sub app for D5 -->
+        <subapplication name="D5 - Detail" appendURL="d5/">
+            <accesses>
+                <access appendURL="audi/cn/v1">
+                    <oems>
+                        <valueRef value="audi" />
+                    </oems>
+                    <revisions>
+                        <valueRef value="d5"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="cn"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="latitude"/>
+                        <parameter referenceId="longitude"/>
+                        <parameter referenceId="language"/>
+                    </parameters>
+                    <parameter referenceId="vin">
+                        <options defaultOption="0">
+                            <option hint="Working VIN" value="WAU9FC8K5DA105966"/>
+                        </options>
+                    </parameter>
+                </access>
+            </accesses>
+
+        </subapplication>
+
+
+    </subapplications>
+</service>

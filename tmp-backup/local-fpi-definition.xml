@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service name="Fuel prices">
+    <backends>
+
+        <!-- Not available in China -->
+
+        <!-- app 8 -->
+        <backendsEntry port="8083">
+            <withBackends>
+                <backendId>app8.direct</backendId>
+            </withBackends>
+            <forRegions>
+                <region>eu_rdw</region>
+                <region>nar</region>
+                <region>jp</region>
+            </forRegions>
+            <urlEntries>
+                <urlEntry appendURL="fpi"/>
+            </urlEntries>
+        </backendsEntry>
+
+        <!-- TODO could be even more concise if backend ID is defined at same time with
+        its regions, since provisioning is, most of time, similarly implemented in different regions -->
+
+        <!-- app 8 authentication, TUI-5 and TUI Demo for Japan and Europa -->
+        <backendsEntry id="app8.dispatcher">
+            <withBackends>
+                <backendId>app8.dispatcher</backendId>
+                <backendId>tui5.dispatcher</backendId>
+                <backendId>tuidemo.dispatcher</backendId>
+            </withBackends>
+            <forRegions>
+                <region>eu_rdw</region>
+                <region>nar</region>
+                <region>jp</region>
+            </forRegions>
+            <urlEntries>
+                <urlEntry appendURL="fpi/v1">
+                    <forRevisions>
+                        <rev>rev3</rev>
+                    </forRevisions>
+                </urlEntry>
+                <urlEntry appendURL="fpi/v2">
+                    <forRevisions>
+                        <rev>rev1</rev>
+                        <rev>rev2</rev>
+                        <rev>rev4</rev>
+                    </forRevisions>
+                </urlEntry>
+                <urlEntry appendURL="fpi/v3">
+                    <forRevisions>
+                        <rev>rev5</rev>
+                    </forRevisions>
+                </urlEntry>
+            </urlEntries>
+        </backendsEntry>
+
+    </backends>
+
+    <!-- Common parameters -->
+    <parametersPool>
+        <parameter id="service.configuration" label="Data profile" urlKey="serviceconfigid" appendByDispatcher="true">
+            <options defaultOption="0">
+                <!-- Audi -->
+                <option hint="Inrix - Audi" value="ECENARAUDI"/>
+                <option hint="Navitime - Audi" value="JAPANAUDI"/>
+                <!-- Volkswagen -->
+                <option hint="Inrix - VW" value="ECENARVW"/>
+                <option hint="Navitime on App8 - VW" value="JAPANVW"/>
+                <option hint="Navitime on TUI - VW" value="NAVITIME_TUI_VW"/>
+                <option hint="Navitime on Prelive - VW" value="NAVITIME_TUI_VW"/>
+                <option hint="Navitime on Live - VW" value="NAVITIME_LIVE_VW"/>
+            </options>
+        </parameter>
+        <parameter id="order" label="Sort by" urlKey="orderby">
+            <options defaultOption="0">
+                <option value="price"/>
+                <option value="distance"/>
+            </options>
+        </parameter>
+    </parametersPool>
+    <subapplications>
+        <!-- Main sub application -->
+        <subapplication name="Main" appendURL="template?subapp=Fuel%20Price%20Info%20Dienst">
+            <accesses>
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev4"/>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                        <valueRef value="jp"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="language"/>
+                    </parameters>
+                </access>
+            </accesses>
+        </subapplication>
+
+        <!-- List sub application -->
+        <subapplication name="List" appendURL="template?subapp=FPIList">
+            <parameters>
+                <parameter referenceId="service.configuration"/>
+                <parameter referenceId="latitude" name="Search latitude"/>
+                <parameter referenceId="longitude" name="Search longitude"/>>
+                <parameter referenceId="order"/>
+                <parameter referenceId="distance.unit"/>
+            </parameters>
+            <accesses>
+                <access>
+                    <oems>
+                        <valueRef value="vw"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev1"/>
+                        <valueRef value="rev2"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                        <valueRef value="jp"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="language" appendByDispatcher="true"/>
+                    </parameters>
+                    <headers>
+                        <parameter referenceId="accept.language"/>
+                    </headers>
+                </access>
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev3"/>
+                        <valueRef value="rev4"/>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                        <valueRef value="jp"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="language"/>
+                    </parameters>
+                </access>
+            </accesses>
+        </subapplication>
+
+
+        <!-- Detail sub application -->
+        <subapplication name="Detail" appendURL="template?subapp=FPIDetail">
+
+            <!-- Parameters common to all accesses -->
+            <parameters>
+                <parameter referenceId="service.configuration"/>
+                <parameter referenceId="latitude"/>
+                <parameter referenceId="longitude"/>
+                <parameter urlKey="itemid" label="Station ID"/>
+                <parameter referenceId="distance.unit"/>
+            </parameters>
+
+            <accesses>
+                <!-- rev1 and rev2 -->
+                <access>
+                    <oems>
+                        <valueRef value="vw"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev1"/>
+                        <valueRef value="rev2"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                        <valueRef value="jp"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="language" appendByDispatcher="true"/>
+                        <parameter referenceId="skin"/>
+                        <parameter referenceId="dephi_xresolution"/>
+                        <parameter referenceId="dephi_yresolution"/>
+                    </parameters>
+                    <headers>
+                        <parameter referenceId="accept.language"/>
+                        <parameter referenceId="x-skin"/>
+                        <parameter referenceId="xresolution_header"/>
+                        <parameter referenceId="yresolution_header"/>
+                    </headers>
+                </access>
+
+                <!-- rev3 to rev5 -->
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev3"/>
+                        <valueRef value="rev4"/>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                        <valueRef value="jp"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="language"/>
+                    </parameters>
+                </access>
+
+            </accesses>
+        </subapplication>
+
+        <!-- Detail sub application -->
+        <subapplication name="Detail HTML - Rev4" appendURL="template?subapp=FPIDetailEmbedded">
+            <accesses>
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev4"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                        <valueRef value="jp"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="service.configuration"/>
+                        <parameter referenceId="language"/>
+                        <parameter referenceId="latitude"/>
+                        <parameter referenceId="longitude"/>
+                        <parameter urlKey="gasStationLatitude" label="Station latitude"/>
+                        <parameter urlKey="gasStationLongitude" label="Station longitude"/>
+                        <parameter urlKey="itemid" label="Station ID"/>
+                    </parameters>
+                </access>
+            </accesses>
+        </subapplication>
+
+    </subapplications>
+
+    <!--
+     rev3:
+
+
+    rev5:
+
+
+    Main rev5
+
+    http://10.36.16.40:8083/fpi/template?subapp=Fuel%20Price%20Info%20Dienst&rev=rev5&hu_region=cn&oem=audi&lan=en_US
+
+
+    -->
+</service>

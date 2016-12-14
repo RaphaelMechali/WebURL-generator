@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Backends definition -->
+<backends>
+
+    <!-- App 8, no dispatcher : demdc-pr-mbb-app8.de.valtech.com (using IP) -->
+    <backend id="app8.direct" label="App8 - direct" baseURL="http://10.36.18.40" dispatcher="false"/>
+
+    <!-- App 8, through dispatcher -->
+    <backend id="app8.dispatcher" label="App8 - dispatcher" baseURL="http://mib-tx.vw.mbb6.valtech.de/mbb" dispatcher="true">
+        <users>
+            <!-- C7PA targets -->
+            <user label="C7PA - Chinese" login="c9be542a26bc703df8ad6f445e7db1fa*Audi*CN" password="7806cbfedc9bb8d1d0a3f2ec51d9c311" realm="T1" vin="BAUOTESO2AFBEAD7G"/>
+
+            <!-- G22 targets -->
+            <user label="G22 - ECE" login="9ba301412f61625617fb458b94791b27*Audi*DE" password="3d67cb96cd114d146664270553bb5f9b" realm="T1"/>
+			<user label="G22 - Chinese" login="97f0e2b20b89d3aa117595a5d63db025*Audi*CN" password="37744be38cfed5ccbd94ae981d62a965" realm="T1" vin="BAUIEE4MZ14101701"/>
+            <user label="G22 - Japan" login="c7d29af16ca4192911b4f63950d8f232*Audi*JP" password="6b3e82496639cf46f017459c43435967" realm="T1" vin="BAUIEE4MZ14091201"/>
+
+            <!-- G24 targets -->
+            <user label="G24 - Japanese" login="d5aa093e814124db2807900724090de2*Audi*JP" password="34b481fa0004d0562ef34cebe9d633d6" realm="T21"/>
+            <user label="G24 - ECE" login="ed357b62f8d4c03f664b13c792a6838d*Audi*DE" password="3ccae8ee3c672d08001237bc2c6fec34" realm="T1" vin="BAUOTESO248A697DD"/>
+
+            <!-- VW targets -->
+            <user label="vw - jp" login="4d40a9981ad744094b770a20ad30db88*VW*JP" password="f049b30b1530a46e6251910371edf2f0" realm="T1"/>
+            <user label="vw - cn" login="83b2f5612d7df82608a8b85fc25cc735*VW*CN" password="39ed7804e752779ff24862c9d8f34b0a" realm="T1"/>
+        </users>
+    </backend>
+
+    <!-- TUI5 public, through dispatcher -->
+    <backend id="tui5.dispatcher" label="TUI5 - dispatcher" baseURL="http://tui-mbbservices05.audi-connect.de/mbb" dispatcher="true">
+        <users>
+            <!-- VW target, Vin : WVWMBBVT4BS201542 -->
+            <user label="VW - JP" login="f1a5093020b68beb76a8d884d00a8c0f*VW*JP" password="d17aaaa438046b9731b8d59d62543464" realm="T1"/>
+            <!-- VW target, Vin : BVWEK37HZ12129674 (TARGET TOULOUSE VIN) -->
+            <user label="VW - JP TLSE" login="624a2a9c2959056331e65e0a04ebf9df*VW*JP" password="c3184a1b1aee98ec8f1f7bc2d2d35b75" realm="T1"/>
+            <!-- VW target, Vin : XX (TARGET TOULOUSE VIN) -->
+            <user label="VW - JP OLGA" login="305f9ec73838581475fe7eb320b4b7cc*VW*JP" password="5957d819feddf1c8f0f36d3ec0f73ac7" realm="T1"/>
+            <!-- VW target, Vin : BVWES2AUZ13120203 -->
+            <user label="VW - Europe" login="2924c39c17f9192a5778a071884b29e9*VW*DE" password="20c8a2aee890c42a5c8f2996028b6ac3" realm="T1"/>
+            <!-- G11 -->
+            <user label="G11 - Europa" login="ed357b62f8d4c03f664b13c792a6838d*Audi*DE" password="3ccae8ee3c672d08001237bc2c6fec34" realm="T1"/>
+            <user label="G11 - Japan" login="b29ee096b7d6c4f202696a68d202d342*Audi*JP" password="2b1599d25b488d634bd2eb4d046a23a0" realm="T1"/>
+            <!-- TODO filter by oem / rev / reg ? -->
+            <!-- G22 targets -->
+            <user label="G22 - Europa" login="e2e6d69e5759b5b28a6021ef36d4f7a7*Audi*DE" password="f6a64c338df36c8850c028101419b1c9" realm="T1"/>
+            <user label="G22 - JAPAN" login="c7d29af16ca4192911b4f63950d8f232*Audi*JP" password="459a85bd4a4ae59f7b020c8a00bdb255" realm="T1"/>
+
+            <!-- G24 targets -->
+            <user label="G24 - Europa" login="ec86408fe0c9bfe8fe20a753204182ae*Audi*DE" password="0b72df9fb5144a454eaf5eb15dd63920" realm="T1"/>
+            107d90c7efc08c1be848e783e4dbb9f2*Audi*DE
+            PASSWORD: 364b693eac163081eb13a998b2c3afd7
+            <user label="G24 - Nar" login="88e5b027a0c158af1ee2c11021866911*Audi*US" password="45456c5f8ad9f07655fd1604f784b0be" realm="T1" />
+        </users>
+    </backend>
+
+
+    <!-- TUI demo public, through dispatcher -->
+    <backend id="tuidemo.dispatcher" label="TUI demo - dispatcher" baseURL="https://tui2-mbbservices04.audi-connect.de/mbb" dispatcher="true">
+        <users>
+
+            <!-- VW target -->
+            <!-- VIN: WVWMBBVTFAE136649 -->
+            <user label="VW - JP" login="890e171f0289279d8ef8b2fb95a8335e*VW*JP" password="868ebfb29c956e8aa90f1d3ed15b5455" realm="T1"/>
+            <!-- VW target, Vin : BVWEK37HZ12129674 (TARGET TOULOUSE VIN) -->
+            <user label="VW - JP" login="624a2a9c2959056331e65e0a04ebf9df*VW*JP" password="a9588e62f73299d6473a4fbde39654a2" realm="T1"/>
+            <!-- G11 -->
+            <user label="G11 - Europa" login="aabb220c4f65b4cbf706376a6585f032*Audi*DE" password="3328891b58aa6e2ce39206cf31b1b9cf" realm="T1"/>
+            <!-- G22 targets -->
+            <user label="G22 - Japanese" login="c7d29af16ca4192911b4f63950d8f232*Audi*JP" password="bc99b4f3d476b0f4b03c9720fabb9125" realm="T1"/>
+            <user label="G22 - Europe" login="3101553c3c2c4ff64a2aedfd3399a28e*Audi*DE" password="63ba8c8808c5e246e580b89b1da74720" realm="T1"/>
+            <!-- G24 targets -->
+            <user label="G24 - ECE" login="ec86408fe0c9bfe8fe20a753204182ae*Audi*DE" password="070dbf2091286efde2226f6b947d5d7b" realm="T1"/>
+        </users>
+    </backend>
+
+    <!-- TUI4 public, through dispatcher -->
+    <backend id="tui4.dispatcher" label="TUI4 - dispatcher" baseURL="http://tui-project-mbbservices.audi-connect.de/mbb" dispatcher="true">
+        <users>
+            <!-- AUDI XX targets -->
+            <user label="XX - XX" login="a08b852f232212599e58ff3451a28c7e*Audi*DE" password="7046ea189e195223626fe3066148e8c5" realm="T1"/>
+        </users>
+    </backend>
+
+    <!-- TUI-3 public, through dispatcher -->
+    <backend id="tuichina3.dispatcher" label="TUI CN 3 - dispatcher" baseURL="https://int-mbbservices01.audi-connect.cn/mbb" dispatcher="true">
+        <users>
+            <!-- VW -->
+            <user label="VW - Chinese" login="d2515a35557118737b6968abf100d9f2*VW*CN" password="2d99b1201a3ca8d0f09101e8d7c62621" realm="T1"/>
+
+            <!-- C7PA targets -->
+            <user label="C7PA - Chinese" login="c9be542a26bc703df8ad6f445e7db1fa*Audi*CN" password="567233bc3a3652385048ba167ba8078d" realm="T1"/>
+
+            <!-- G22 targets -->
+            <user label="G22 - Chinese" login="97f0e2b20b89d3aa117595a5d63db025*Audi*CN" password="0e4138316413b5092c26e378ea928fdb" realm="T21"/>
+        </users>
+    </backend>
+
+    <!-- TUI-6 public, through dispatcher -->
+    <backend id="tuichina6.dispatcher" label="TUI CN 6 - dispatcher" baseURL="https://int-mbbservices03.audi-connect.cn/mbb" dispatcher="true">
+        <users>
+            <!-- VW -->
+            <user label="VW - Chinese" login="b248ca90d473ae23b26bb3b3884cb534*VW*CN" password="b0de0ab51bb4751734b7e4175db644bd" realm="T1"/>
+
+            <user label="C7PA - Chinese" login="c9be542a26bc703df8ad6f445e7db1fa*Audi*CN" password="0bb44dd48259b63059d53a1945596fc8" realm="T1"/>
+            <user label="G22 - Chinese" login="97f0e2b20b89d3aa117595a5d63db025*Audi*CN" password="5059b64019a5eef866cd7e729d412278" realm="T1"/>
+            <user label="G24 - Chinese" login="092f6f46c55e3f800315978329812f07*Audi*CN" password="3fe773bac7277944d283784c0a9e1719" realm="T1"/>
+        </users>
+    </backend>
+
+</backends>

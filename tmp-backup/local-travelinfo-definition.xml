@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service name="Travel information">
+    <backends>
+
+        <!-- Not available in China and Japan -->
+
+        <!-- app 8 for Europa and North america -->
+        <backendsEntry port="8090">
+            <withBackends>
+                <backendId>app8.direct</backendId>
+            </withBackends>
+            <forRegions>
+                <region>eu_rdw</region>
+                <region>nar</region>
+            </forRegions>
+            <urlEntries>
+                <urlEntry appendURL="travelinfo/audi/rev3">
+                    <forRevisions>
+                        <rev>rev3</rev>
+                    </forRevisions>
+                </urlEntry>
+                <urlEntry appendURL="travelinfo/audi/rev4">
+                    <forRevisions>
+                        <rev>rev4</rev>
+                    </forRevisions>
+                </urlEntry>
+                <urlEntry appendURL="travelinfo/audi/rev5">
+                    <forRevisions>
+                        <rev>rev5</rev>
+                    </forRevisions>
+                </urlEntry>
+            </urlEntries>
+        </backendsEntry>
+
+        <!-- app 8 authentication, TUI 5 and TUI demo for Europa and North america -->
+
+        <!-- app 8 authentication, all revisions and regions -->
+        <backendsEntry id="app8.dispatcher">
+            <withBackends>
+                <backendId>app8.dispatcher</backendId>
+                <backendId>tui5.dispatcher</backendId>
+                <backendId>tuidemo.dispatcher</backendId>
+            </withBackends>
+            <forRegions>
+                <region>eu_rdw</region>
+                <region>nar</region>
+            </forRegions>
+            <urlEntries>
+                <urlEntry appendURL="travelinfo/audi">
+                    <forRevisions>
+                        <rev>rev3</rev>
+                    </forRevisions>
+                </urlEntry>
+                <urlEntry appendURL="travelinfo/v2">
+                    <forRevisions>
+                        <rev>rev4</rev>
+                    </forRevisions>
+                </urlEntry>
+                <urlEntry appendURL="travelinfo/v3">
+                    <forRevisions>
+                        <rev>rev5</rev>
+                    </forRevisions>
+                </urlEntry>
+            </urlEntries>
+        </backendsEntry>
+    </backends>
+
+    <subapplications>
+        <!-- http://demdc-pr-mbb-app8.de.valtech.com:8090/travelinfo/audi/rev3/list?lat=48.77&lon=11.43&lan=de_DE&serviceconfigid=audi -->
+        <!-- Main sub application, no specific URL and parameter -->
+        <subapplication name="List" appendURL="list">
+            <accesses>
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev3"/>
+                        <valueRef value="rev4"/>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="language"/>
+                        <parameter referenceId="latitude"/>
+                        <parameter referenceId="longitude"/>
+                    </parameters>
+                </access>
+            </accesses>
+        </subapplication>
+
+        <!-- Main sub application, no specific URL and parameter -->
+        <subapplication name="Detail" appendURL="detail">
+            <accesses>
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="language"/>
+                        <parameter referenceId="latitude"/>
+                        <parameter referenceId="longitude"/>
+                        <parameter id="itemid" label="Travel ID" urlKey="itemid"/>
+                    </parameters>
+                </access>
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev4"/>
+                        <valueRef value="rev3"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="language"/>
+                        <parameter referenceId="latitude"/>
+                        <parameter referenceId="longitude"/>
+                        <parameter referenceId="html"/>
+                        <parameter id="itemid" label="Travel ID" urlKey="itemid"/>
+                    </parameters>
+                </access>
+            </accesses>
+        </subapplication>
+
+    </subapplications>
+
+</service>

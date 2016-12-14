@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service name="Menu">
+    <backends>
+        <!-- TODO merge silently with applist (not possible, needs port in URL entry, by rev) -->
+
+        <!-- app 8, all revisions and regions -->
+        <backendsEntry port="8081">
+            <withBackends>
+                <backendId>app8.direct</backendId>
+            </withBackends>
+            <urlEntries>
+                <urlEntry appendURL="menu/template"/>
+            </urlEntries>
+        </backendsEntry>
+
+        <!-- app 8 authentication, all revisions and regions -->
+        <backendsEntry>
+            <withBackends>
+                <backendId>app8.dispatcher</backendId>
+            </withBackends>
+            <urlEntries>
+                <urlEntry appendURL="menu/template"/>
+            </urlEntries>
+        </backendsEntry>
+
+    </backends>
+
+    <subapplications>
+
+        <!-- List sub application -->
+        <subapplication name="Main">
+            <accesses>
+                <!-- VW / rev1 -->
+                <access appendURL="?service=mainmenu">
+                    <oems>
+                        <valueRef value="VW"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev1"/>
+                    </revisions>
+                    <parameters>
+                        <parameter referenceId="language" appendByDispatcher="true"/>
+                        <parameter referenceId="ambient"/>
+                        <parameter referenceId="dephi_xresolution"/>
+                        <parameter referenceId="dephi_xresolution"/>
+                        <parameter referenceId="skin" appendByDispatcher="true"/>
+                    </parameters>
+                    <headers>
+                        <parameter referenceId="accept.language"/>
+                        <parameter referenceId="x-color"/>
+                        <parameter referenceId="xresolution_header"/>
+                        <parameter referenceId="yresolution_header"/>
+                        <parameter referenceId="x-skin"/>
+                    </headers>
+                </access>
+
+
+                <!-- Audi / rev 3 and rev 4-->
+                <access>
+                    <oems>
+                        <valueRef value="Audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev3"/>
+                    </revisions>
+                    <parameters>
+                        <parameter referenceId="language"/>
+                    </parameters>
+                </access>
+            </accesses>
+        </subapplication>
+
+        <!-- List sub application -->
+        <subapplication name="Disclaimer">
+            <accesses>
+                <!-- VW / rev1 -->
+                <access appendURL="?subapp=disclaimer.applist">
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev4"/>
+                    </revisions>
+                    <parameters>
+                        <parameter referenceId="language" appendByDispatcher="true"/>
+                        <parameter referenceId="model"/>
+                    </parameters>
+                </access>
+            </accesses>
+        </subapplication>
+
+    </subapplications>
+</service>

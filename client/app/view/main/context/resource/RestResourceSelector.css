@@ -1,0 +1,44 @@
+.RestResourcePictureBase {
+    position: absolute;
+    top: 30%;
+    left: 15%;
+    width: 70%;
+    height: 70%;
+}
+
+.RestResourcePictureCUSTOM {
+    background: url('./assets/custom.png') no-repeat;
+    background-size: 60%;
+}
+
+.RestResourcePictureDETAIL {
+    background: url('./assets/detail.png') no-repeat;
+    background-size: 60%;
+}
+
+.RestResourcePictureHEALTHCHECK {
+    background: url('./assets/healthcheck.png') no-repeat;
+    background-size: 60%;
+}
+
+.RestResourcePictureLIST {
+    background: url('./assets/list.png') no-repeat;
+    background-size: 60%;
+}
+
+.RestResourcePictureMAIN {
+    background: url('./assets/main.png') no-repeat;
+    background-size: 60%;
+}
+
+.RestResourcePictureSEARCH {
+    background: url('./assets/search.png') no-repeat;
+    background-size: 60%;
+}
+
+.RestResourcePicturePREVIEW {
+    background: url('./assets/preview.png') no-repeat;
+    background-size: 60%;
+}
+
+

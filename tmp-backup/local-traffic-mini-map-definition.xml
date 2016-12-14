@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service name="Traffic Mini Map">
+    <backends>
+
+        <!-- China: TUI-3 and TUI-6 -->
+        <backendsEntry>
+            <withBackends>
+                <backendId>tuichina3.dispatcher</backendId>
+                <backendId>tuichina6.dispatcher</backendId>
+            </withBackends>
+            <forRegions>
+                <region>cn</region>
+            </forRegions>
+            <urlEntries>
+                <urlEntry appendURL="trafficminimap/v1">
+                    <forRevisions>
+                        <rev>rev1</rev>
+                        <rev>rev2</rev>
+                    </forRevisions>
+                </urlEntry>
+            </urlEntries>
+        </backendsEntry>
+
+    </backends>
+
+    <subapplications>
+        <!-- Main sub application, no specific URL and parameter -->
+        <subapplication name="MiniMapListRequest" appendURL="MiniMapListRequest">
+            <accesses>
+                <access>
+                    <oems>
+                        <valueRef value="vw"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev1"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="cn"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="latitude"/>
+                        <parameter referenceId="longitude"/>
+                        <parameter referenceId="language" appendByDispatcher="true"/>
+                    </parameters>
+                    <headers>
+                        <parameter referenceId="accept.language"/>
+                    </headers>
+                </access>
+            </accesses>
+        </subapplication>
+
+    </subapplications>
+</service>

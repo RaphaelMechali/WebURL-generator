@@ -5,44 +5,32 @@
       "label": "App 8",
       "type": "tomcat",
       "url": "10.36.18.40"
-    },
-    {
+    }, {
       "value": "dispatch8",
       "label": "Dispatch 8",
       "type": "dispatcher",
       "url": "http://mib-tx.vw.mbb6.valtech.de/mbb",
       "users": []
-    },
-    {
+    }, {
       "value": "tui5",
       "label": "T&I 5",
       "type": "dispatcher",
       "url": "http://tui-mbbservices05.audi-connect.de/mbb",
-      "regions": [
-        "eu_rdw",
-        "nar",
-        "jp"
-      ],
+      "regions": ["eu_rdw", "nar", "jp"],
       "users": []
-    },
-    {
+    }, {
       "value": "tui3",
       "label": "T&I 3 - china",
       "type": "dispatcher",
       "url": "http://tui-mbbservices05.audi-connect.de/mbb",
-      "regions": [
-        "cn"
-      ],
+      "regions": ["cn"],
       "users": []
-    },
-    {
+    }, {
       "value": "tui6",
       "label": "T&I 6",
       "type": "dispatcher",
       "url": "http://tui-mbbservices05.audi-connect.de/mbb",
-      "regions": [
-        "cn"
-      ],
+      "regions": ["cn"],
       "users": []
     }
   ]

@@ -15,7 +15,7 @@ class PictureSelectorComponent extends Component {
 
     render() {
         return (
-            <div className={`PictureSelector ${this.props.containerClass}`}>
+            <div className="PictureSelector">
                 {
                     this.props.list.map((item, index) =>
                         <div className={`${this.props.selectedItem === item ? 'item-selected' : 'item-not-selected'}`}

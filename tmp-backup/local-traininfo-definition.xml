@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service name="Train information">
+    <backends>
+        <!-- Available only in Europa -->
+
+        <!-- app 8 -->
+        <backendsEntry port="8094">
+            <withBackends>
+                <backendId>app8.direct</backendId>
+            </withBackends>
+            <forRegions>
+                <region>eu_rdw</region>
+            </forRegions>
+            <urlEntries>
+                <urlEntry appendURL="traininfo/v1">
+                    <forRevisions>
+                        <rev>rev4</rev>
+                        <rev>rev5</rev>
+                    </forRevisions>
+                </urlEntry>
+            </urlEntries>
+        </backendsEntry>
+
+        <!-- North America, Europa and Japan: TUI-5, TUI-Demo and app8 dispatcher -->
+        <backendsEntry>
+            <withBackends>
+                <backendId>app8.dispatcher</backendId>
+                <backendId>tui5.dispatcher</backendId>
+                <backendId>tuidemo.dispatcher</backendId>
+            </withBackends>
+            <forRegions>
+                <region>eu_rdw</region>
+            </forRegions>
+            <urlEntries>
+                <urlEntry appendURL="traininfo/v1">
+                    <forRevisions>
+                        <rev>rev4</rev>
+                    </forRevisions>
+                </urlEntry>
+                <urlEntry appendURL="traininfo/v3">
+                    <forRevisions>
+                        <rev>rev5</rev>
+                    </forRevisions>
+                </urlEntry>
+            </urlEntries>
+        </backendsEntry>
+
+    </backends>
+
+    <!-- Defines parameters pool for this service -->
+    <parametersPool>
+
+        <parameter id="long.distance.traffic" label="Long distance traffic" appendByDispatcher="false"
+                   urlKey="rld_traffic">
+            <options defaultOption="0">
+                <option value="true"/>
+                <option value="false"/>
+            </options>
+        </parameter>
+
+        <parameter id="local.traffic" label="Local traffic" appendByDispatcher="false" urlKey="local_traffic">
+            <options defaultOption="0">
+                <option value="true"/>
+                <option value="false"/>
+            </options>
+        </parameter>
+
+        <parameter id="board.type" urlKey="boardType" label="Trip type">
+            <options defaultOption="0">
+                <option value="departures"/>
+                <option value="arrivals"/>
+            </options>
+        </parameter>
+
+    </parametersPool>
+
+
+    <subapplications>
+
+        <!-- Main sub application, no specific URL and parameter -->
+        <subapplication name="Main">
+            <accesses>
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev4"/>
+                        <valueRef value="rev5"/>
+                        <valueRef value="rev6"/>
+                        <valueRef value="rev7"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                        <valueRef value="jp"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="language"/>
+                    </parameters>
+                </access>
+            </accesses>
+        </subapplication>
+
+        <!-- Stations list -->
+        <subapplication name="Stations list" appendURL="location">
+            <parameters>
+                <parameter referenceId="language"/>
+                <parameter referenceId="latitude" urlKey="latitude"/>
+                <parameter referenceId="longitude" urlKey="longitude"/>
+                <parameter referenceId="local.traffic"/>
+                <parameter referenceId="long.distance.traffic"/>
+            </parameters>
+
+            <accesses>
+                <!-- Revision 4 access -->
+                <access>
+                    <revisions>
+                        <valueRef value="rev4"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                        <valueRef value="jp"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="paging.link"/>
+                        <parameter label="Show in map" urlKey="showInMap">
+                            <options defaultOption="1">
+                                <option value="true"/>
+                                <option value="false"/>
+                            </options>
+                        </parameter>
+                    </parameters>
+                </access>
+
+                <!-- Revision 5 access -->
+                <access>
+                    <revisions>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                        <valueRef value="jp"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="paging.start.index"/>
+                        <parameter referenceId="mini.app"/>
+                        <parameter referenceId="search.area"/>
+                    </parameters>
+                </access>
+
+                <!-- Revision 6 and 7 access -->
+                <access>
+                    <revisions>
+                        <valueRef value="rev6"/>
+                        <valueRef value="rev7"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                        <valueRef value="jp"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="search.area"/>
+                        <parameter referenceId="mini.app"/>
+                        <parameter referenceId="paging.link"/>
+                        <parameter referenceId="latitude" label="Car latitude" urlKey="carlat"/>
+                        <parameter referenceId="longitude" label="Car longitude" urlKey="carlon"/>
+                    </parameters>
+                </access>
+
+            </accesses>
+        </subapplication>
+
+        <!-- Time table of current journeys -->
+        <subapplication name="Journey list" appendURL="timetable">
+            <parameters>
+                <parameter referenceId="language"/>
+                <parameter referenceId="board.type"/>
+                <parameter label="Location X" urlKey="x"/>
+                <parameter label="Location Y" urlKey="y"/>
+                <parameter referenceId="local.traffic"/>
+                <parameter referenceId="long.distance.traffic"/>
+                <parameter label="Location ID" urlKey="locationId"/>
+            </parameters>
+
+            <accesses>
+                <!-- Revision 4 access -->
+                <access>
+                    <revisions>
+                        <valueRef value="rev4"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                        <valueRef value="jp"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="paging.link"/>
+                    </parameters>
+                </access>
+
+                <!-- Revision 5 access -->
+                <access>
+                    <revisions>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                        <valueRef value="jp"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="paging.start.index"/>
+                    </parameters>
+                </access>
+
+                <!-- Revision 6 and 7 access -->
+                <access>
+                    <revisions>
+                        <valueRef value="rev6"/>
+                        <valueRef value="rev7"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                        <valueRef value="jp"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="paging.link"/>
+                    </parameters>
+                </access>
+
+            </accesses>
+        </subapplication>
+
+        <subapplication name="Journey detail" appendURL="timetable/detail">
+            <parameters>
+                <parameter referenceId="language"/>
+                <parameter referenceId="board.type"/>
+                <parameter label="Journey ref." urlKey="journeyRef"/>
+                <parameter label="Journey date" urlKey="journeyDate"/>
+                <parameter label="Journey X" urlKey="journeyX"/>
+                <parameter label="Journey Y" urlKey="journeyY"/>
+                <parameter label="Stop ID" urlKey="stopId"/>
+                <parameter label="Cancelled" urlKey="cancelled">
+                    <options defaultOption="1">
+                        <option value="true"/>
+                        <option value="false"/>
+                    </options>
+                </parameter>
+            </parameters>
+            <accesses>
+                <!-- Rev4 access allowing for HTML format -->
+                <access>
+                    <revisions>
+                        <valueRef value="rev4"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                        <valueRef value="jp"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="html"/>
+                    </parameters>
+                </access>
+
+                <!-- Rev 5, 6, 7 common access -->
+                <access>
+                    <revisions>
+                        <valueRef value="rev5"/>
+                        <valueRef value="rev6"/>
+                        <valueRef value="rev7"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                        <valueRef value="jp"/>
+                    </regions>
+                </access>
+            </accesses>
+        </subapplication>
+
+    </subapplications>
+
+</service>

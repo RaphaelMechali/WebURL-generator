@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service name="Disclaimer">
+    <backends>
+        <!-- Not deployed on app8 right now  -->
+
+        <!-- North America, Europa and Japan: TUI-5 and TUI-Demo -->
+        <backendsEntry>
+            <withBackends>
+                <backendId>tui5.dispatcher</backendId>
+                <backendId>tuidemo.dispatcher</backendId>
+            </withBackends>
+            <forRegions>
+                <region>eu_rdw</region>
+                <region>nar</region>
+                <region>jp</region>
+            </forRegions>
+            <urlEntries>
+                <urlEntry appendURL="disclaimer/v1">
+                    <forRevisions>
+                        <rev>rev1</rev>
+                        <rev>rev2</rev>
+                        <rev>rev4</rev>
+                        <rev>rev5</rev>
+                    </forRevisions>
+                </urlEntry>
+            </urlEntries>
+        </backendsEntry>
+
+        <!-- China: TUI-3 and TUI-6 -->
+        <backendsEntry>
+            <withBackends>
+                <backendId>tuichina3.dispatcher</backendId>
+                <backendId>tuichina6.dispatcher</backendId>
+            </withBackends>
+            <forRegions>
+                <region>cn</region>
+            </forRegions>
+            <urlEntries>
+                <urlEntry appendURL="disclaimer/v1">
+                    <forRevisions>
+                        <rev>rev1</rev>
+                        <rev>rev2</rev>
+                        <rev>rev4</rev>
+                        <rev>rev5</rev>
+                    </forRevisions>
+                </urlEntry>
+            </urlEntries>
+        </backendsEntry>
+
+    </backends>
+
+    <subapplications>
+
+        <!-- One sub application -->
+        <subapplication name="Main">
+
+
+            <!--parameters/-->
+            <accesses>
+                <!-- Access for VW / Rev 1 / standard and GP -->
+                <access>
+                    <oems>
+                        <valueRef value="vw"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev1"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                        <valueRef value="jp"/>
+                    </regions>
+                    <headers>
+                        <parameter referenceId="xresolution_header"/>
+                        <parameter referenceId="yresolution_header"/>
+                        <parameter referenceId="x-skin"/>
+                        <parameter referenceId="accept.language"/>
+                    </headers>
+                </access>
+
+                <!-- Access for VW / Rev 1 / China -->
+                <access>
+                    <oems>
+                        <valueRef value="vw"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev1"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="cn"/>
+                    </regions>
+                    <headers>
+                        <parameter referenceId="x-skin"/>
+                        <parameter referenceId="accept.language"/>
+                    </headers>
+                </access>
+
+                <!-- Access for Audi rev4 / rev5-->
+                <access>
+                    <oem>
+                        <valueRef value="audi"/>
+                    </oem>
+                    <revisions>
+                        <valueRef value="rev4"/>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions/>
+                    <parameters>
+                        <parameter referenceId="language"/>
+                    </parameters>
+                </access>
+
+            </accesses>
+        </subapplication>
+    </subapplications>
+</service>

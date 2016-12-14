@@ -1,6 +1,35 @@
 .PictureSelector {
     display: inline-flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: -5px;
+    padding: 0 15px 15px 15px;
+
+}
+
+.PictureSelector .item-selected, .PictureSelector .item-not-selected {
+    width: 115px;
+    height: 80px;
+    position: relative;
+
+}
+
+/** To be used as picture for widgets using a only textual representation */
+.TextItem {
+    line-height: 80px;
+    box-sizing: border-box;
+    margin: 0 auto;
+    font-size: 16px;
+    text-align: center;
+}
+
+/** To be used as legend for widgets using a picture */
+.ItemLabel {
+    font-size: 12px;
+    text-align: left;
+    position: absolute;
+    left: 5px;
+    top: 5px;
 }
 
 .PictureSelector .item-selected {

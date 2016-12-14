@@ -1,88 +1,82 @@
-.ServiceSelector {
-    flex-direction: row;
-    flex-wrap: wrap;
-    padding: 5px;
-}
-
-.ServiceItem {
-    width: 110px;
-    height: 80px;
-    position: relative;
-}
-
-.ServiceItemLabel {
+.ServicePictureBase {
     position: absolute;
-    left: 5px;
-    top: 5px;
-    font-size: 10px;
-    text-align: left;
+    left: 25%;
+    top: 35%;
+    width: 60%;
+    height: 60%;
 }
 
-.ServicePictureBase{
-    position: absolute;
-    left: 15%;
-    top: 30%;
-    width: 70%;
-    height: 70%;
-}
-
-.ServiceSelector .ServiceAPPLIST {
+.ServiceAPPLIST {
     background: url('./assets/applist.png') no-repeat;
     background-size: 100%;
 }
-.ServiceSelector .ServiceCITYEVENTS {
+
+.ServiceCITYEVENTS {
     background: url('./assets/cityevents.png') no-repeat;
     background-size: 100%;
 }
-.ServiceSelector .ServiceCOUNTRYINFO {
+
+.ServiceCOUNTRYINFO {
     background: url('./assets/countryinfo.png') no-repeat;
     background-size: 100%;
 }
-.ServiceSelector .ServiceDEALEREVENTS {
+
+.ServiceDEALEREVENTS {
     background: url('./assets/dealerevents.png') no-repeat;
     background-size: 100%;
 }
-.ServiceSelector .ServiceEFPI {
+
+.ServiceEFPI {
     background: url('assets/efpi.png') no-repeat;
     background-size: 100%;
 }
-.ServiceSelector .ServiceFLIGHTINFO {
+
+.ServiceFLIGHTINFO {
     background: url('./assets/flightinfo.png') no-repeat;
     background-size: 100%;
 }
-.ServiceSelector .ServiceFPI {
+
+.ServiceFPI {
     background: url('./assets/fpi.png') no-repeat;
     background-size: 100%;
 }
-.ServiceSelector .ServiceNEWS {
+
+.ServiceNEWS {
     background: url('./assets/news.png') no-repeat;
     background-size: 100%;
 }
-.ServiceSelector .ServicePARKINFO {
+
+.ServicePARKINFO {
     background: url('./assets/parkinfo.png') no-repeat;
     background-size: 100%;
 }
-.ServiceSelector .ServicePOI {
+
+.ServicePOI {
     background: url('./assets/poi.png') no-repeat;
     background-size: 100%;
 }
-.ServiceSelector .ServiceROADRESTRICTION {
+
+.ServiceROADRESTRICTION {
     background: url('./assets/roadrestriction.png') no-repeat;
     background-size: 100%;
 }
-.ServiceSelector .ServiceTRAININFO {
+
+.ServiceTRAININFO {
     background: url('./assets/traininfo.png') no-repeat;
     background-size: 100%;
 }
-.ServiceSelector .ServiceTRAVELINFO {
+
+.ServiceTRAVELINFO {
     background: url('./assets/travelinfo.png') no-repeat;
     background-size: 100%;
 }
-.ServiceSelector .ServiceVIOLATIONS {
+
+.ServiceVIOLATIONS {
     background: url('./assets/violations.png') no-repeat;
     background-size: 100%;
 }
-.ServiceSelector .ServiceWEATHER {
+
+.ServiceWEATHER {
     background: url('./assets/weather.png') no-repeat;
     background-size: 100%;
 }

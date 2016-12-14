@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service name="Flight information" url="flightinfo/v1">
+    <backends>
+
+        <!-- app 8, all revisions and regions -->
+        <backendsEntry port="8085">
+            <withBackends>
+                <backendId>app8.direct</backendId>
+            </withBackends>
+            <urlEntries>
+                <urlEntry appendURL="flightinfo/v1"/>
+            </urlEntries>
+        </backendsEntry>
+
+        <!-- app 8 authentication, all revisions and regions -->
+        <backendsEntry id="app8.dispatcher">
+            <withBackends>
+                <backendId>app8.dispatcher</backendId>
+            </withBackends>
+            <urlEntries>
+                <urlEntry appendURL="flightinfo/v1">
+                    <forRevisions>
+                        <rev>rev4</rev>
+                    </forRevisions>
+                </urlEntry>
+                <urlEntry appendURL="flightinfo/v3">
+                    <forRevisions>
+                        <rev>rev5</rev>
+                    </forRevisions>
+                </urlEntry>
+            </urlEntries>
+        </backendsEntry>
+
+        <!-- North America, Europa and Japan: TUI-5 and TUI-Demo -->
+        <backendsEntry>
+            <withBackends>
+                <backendId>tui5.dispatcher</backendId>
+                <backendId>tuidemo.dispatcher</backendId>
+            </withBackends>
+            <forRegions>
+                <region>eu_rdw</region>
+                <region>nar</region>
+                <region>jp</region>
+            </forRegions>
+            <urlEntries>
+                <urlEntry appendURL="flightinfo/v1">
+                    <forRevisions>
+                        <rev>rev4</rev>
+                    </forRevisions>
+                </urlEntry>
+                <urlEntry appendURL="flightinfo/v3">
+                    <forRevisions>
+                        <rev>rev5</rev>
+                    </forRevisions>
+                </urlEntry>
+            </urlEntries>
+        </backendsEntry>
+
+        <!-- China: TUI-3 and TUI-6 -->
+        <backendsEntry>
+            <withBackends>
+                <backendId>tuichina3.dispatcher</backendId>
+                <backendId>tuichina6.dispatcher</backendId>
+            </withBackends>
+            <forRegions>
+                <region>cn</region>
+            </forRegions>
+            <urlEntries>
+                <urlEntry appendURL="flightinfo/v1">
+                    <forRevisions>
+                        <rev>rev4</rev>
+                    </forRevisions>
+                </urlEntry>
+                <urlEntry appendURL="flightinfo/v3">
+                    <forRevisions>
+                        <rev>rev5</rev>
+                    </forRevisions>
+                </urlEntry>
+            </urlEntries>
+        </backendsEntry>
+
+    </backends>
+    <headers>
+
+    </headers>
+
+    <!-- Defines parameters pool for this service -->
+    <parametersPool>
+        <parameter id="arrivalOrDeparture" label="Type" urlKey="arrordep">
+            <options defaultOption="0">
+                <option hint="Departure" value="0"/>
+                <option hint="Arrival" value="1"/>
+            </options>
+        </parameter>
+        <parameter id="iataCode" urlKey="airportid" label="IATA code">
+            <options defaultOption="0">
+                <option hint="Munich FJ Strauss" value="MUC"/>
+                <option hint="Paris Ch-De-Gaulle" value="CDG"/>
+                <option hint="Pekin Int. Airport" value="PEK"/>
+                <option hint="Tokyo Haneda Airport" value="HND"/>
+                <option hint="Hangzhou Airport" value="HGH"/>
+            </options>
+        </parameter>
+        <parameter id="provider" label="Provider" urlKey="serviceProfileId" appendByDispatcher="true">
+            <options defaultOption="1">
+                <option hint="China" value="flightinfo_v1_autonavi"/>
+                <option hint="Europa" value="flightinfo_v1_flightstats"/>
+            </options>
+        </parameter>
+    </parametersPool>
+
+
+    <subapplications>
+        <!-- Main sub application, no specific URL and parameter -->
+        <subapplication name="Main">
+            <accesses>
+                <!-- Single access to main template for all OEMs / revisions / regions. Note that when omitting a filter tag (oems/revisions/regions) the filter defaults to all -->
+                <access/>
+            </accesses>
+        </subapplication>
+
+        <!-- List sub application -->
+        <subapplication name="Airport List" appendURL="search/airport">
+            <!-- Parameters common to all sub application accesses -->
+            <headers>
+                <parameter referenceId="provider"/>
+            </headers>
+            <parameters>
+                <!-- Use external defined parameters -->
+                <parameter referenceId="latitude" urlKey="latitude"/>
+                <parameter referenceId="longitude" urlKey="longitude"/>
+                <parameter referenceId="language"/>
+                <parameter referenceId="tts"/>
+                <parameter referenceId="sds"/>
+                <parameter referenceId="distance.unit"/>
+            </parameters>
+
+            <accesses>
+                <!-- Audi / rev 4 & rev 5 /  all regions -->
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev4"/>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions/>
+                </access>
+            </accesses>
+            <!-- TODO complete me!! needs at least location (town name), area, etc... -->
+            <!-- TODO specific location with town name parameter -->
+            <!-- TODO add rev3 / rev6 and rev7 support -->
+        </subapplication>
+
+        <!-- List sub application -->
+        <subapplication name="Flight List" appendURL="search">
+            <!-- Parameters common to all sub application accesses -->
+            <headers>
+                <parameter referenceId="provider"/>
+            </headers>
+            <parameters>
+                <!-- Use external defined parameters -->
+                <parameter referenceId="latitude" urlKey="latitude"/>
+                <parameter referenceId="longitude" urlKey="longitude"/>
+                <parameter referenceId="language"/>
+                <parameter referenceId="tts"/>
+                <parameter referenceId="sds"/>
+                <parameter referenceId="iataCode"/>
+                <parameter referenceId="arrivalOrDeparture"/>
+            </parameters>
+
+            <accesses>
+                <!-- Audi / rev 4 & rev 5 /  all makets -->
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev4"/>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions/>
+                </access>
+            </accesses>
+        </subapplication>
+
+        <!-- List sub application -->
+        <subapplication name="Flight Detail" appendURL="search/flightinfodetail">
+            <!-- Parameters common to all sub application accesses -->
+            <headers>
+                <parameter referenceId="provider"/>
+            </headers>
+            <parameters>
+                <!-- Use external defined parameters -->
+                <parameter referenceId="latitude" urlKey="latitude"/>
+                <parameter referenceId="longitude" urlKey="longitude"/>
+                <parameter referenceId="language"/>
+                <parameter referenceId="tts"/>
+                <parameter referenceId="sds"/>
+                <parameter referenceId="arrivalOrDeparture"/>
+                <parameter referenceId="iataCode"/>
+                <parameter id="flightid" label="Flight ID" urlKey="flightid"/>
+                <parameter id="flightnumber" label="Flight Number" urlKey="flightnumber"/>
+            </parameters>
+
+            <accesses>
+                <!-- Audi / rev 4 /  all markets -->
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev4"/>
+                    </revisions>
+                    <regions/>
+                    <parameters>
+                        <parameter referenceId="html"/>
+                    </parameters>
+                </access>
+                <!-- Audi / rev 5 /  all markets -->
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions/>
+                </access>
+            </accesses>
+        </subapplication>
+
+        <!-- flight search  sub application -->
+        <subapplication name="Flight detail search" appendURL="search/flightinfoflightnumberdetail">
+            <!-- Parameters common to all sub application accesses -->
+            <headers>
+                <parameter referenceId="provider"/>
+            </headers>
+            <parameters>
+                <parameter referenceId="language"/>
+                <parameter referenceId="tts"/>
+                <parameter referenceId="sds"/>
+                <parameter referenceId="arrivalOrDeparture"/>
+                <parameter id="flightnumber" label="Flight Number" urlKey="flightnumber"/>
+            </parameters>
+
+            <accesses>
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev4" />
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions/>
+                </access>
+            </accesses>
+        </subapplication>
+
+
+        <!-- flight search  sub application -->
+        <subapplication name="Flight list search" appendURL="search/flightinfoflightnumberdetail">
+            <!-- Parameters common to all sub application accesses -->
+            <headers>
+                <parameter referenceId="provider"/>
+            </headers>
+            <parameters>
+                <parameter referenceId="language"/>
+                <parameter referenceId="tts"/>
+                <parameter referenceId="sds"/>
+                <parameter referenceId="arrivalOrDeparture"/>
+                <parameter id="flightnumber" label="Flight Number" urlKey="flightnumber"/>
+            </parameters>
+
+            <accesses>
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev4" />
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions/>
+                </access>
+            </accesses>
+        </subapplication>
+
+        <subapplication name="Check entered text" appendURL="checkenteredtext" >
+            <!-- Parameters common to all sub application accesses -->
+            <headers>
+                <parameter referenceId="provider"/>
+            </headers>
+            <parameters>
+                <parameter referenceId="language"/>
+                <parameter referenceId="tts"/>
+                <parameter referenceId="sds"/>
+                <parameter label="Spelled text" urlKey="spelledText"/>
+            </parameters>
+
+            <accesses>
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev4" />
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <regions/>
+                </access>
+            </accesses>
+
+        </subapplication>
+
+    </subapplications>
+</service>

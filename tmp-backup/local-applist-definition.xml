@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service name="App. list">
+    <backends>
+
+        <!-- app 8, all revisions and regions -->
+        <backendsEntry port="8080">
+            <withBackends>
+                <backendId>app8.direct</backendId>
+            </withBackends>
+            <urlEntries>
+                <urlEntry appendURL="applist/v1"/>
+            </urlEntries>
+        </backendsEntry>
+        <!-- V2 -->
+        <backendsEntry>
+            <withBackends>
+                <backendId>app8.dispatcher</backendId>
+                <backendId>tui5.dispatcher</backendId>
+            </withBackends>
+            <urlEntries>
+                <urlEntry appendUrl="applist/v2">
+                    <forRevisions>
+                        <rev>rev4</rev>
+                    </forRevisions>
+                </urlEntry>
+            </urlEntries>
+        </backendsEntry>
+        <!-- V3 -->
+        <backendsEntry>
+            <withBackends>
+                <backendId>app8.dispatcher</backendId>
+                <backendId>tui5.dispatcher</backendId>
+            </withBackends>
+            <urlEntries>
+                <urlEntry appendUrl="applist/v3">
+                    <forRevisions>
+                        <rev>rev5</rev>
+                    </forRevisions>
+                </urlEntry>
+            </urlEntries>
+        </backendsEntry>
+
+        <!-- North America, Europa and Japan: TUI-5 and TUI-Demo -->
+        <backendsEntry>
+            <withBackends>
+                <backendId>tui5.dispatcher</backendId>
+                <backendId>tuidemo.dispatcher</backendId>
+            </withBackends>
+            <forRegions>
+                <region>eu_rdw</region>
+                <region>nar</region>
+                <region>jp</region>
+            </forRegions>
+            <urlEntries>
+                <urlEntry appendURL="menu/v2">
+                    <forRevisions>
+                        <rev>rev1</rev>
+                        <rev>rev2</rev>
+                    </forRevisions>
+                </urlEntry>
+                <urlEntry appendURL="menu/v1">
+                    <forRevisions>
+                        <rev>rev3</rev>
+                    </forRevisions>
+                </urlEntry>
+            </urlEntries>
+        </backendsEntry>
+
+        <!-- China: TUI-3 and TUI-6 -->
+        <backendsEntry>
+            <withBackends>
+                <backendId>tuichina3.dispatcher</backendId>
+                <backendId>tuichina6.dispatcher</backendId>
+            </withBackends>
+            <forRegions>
+                <region>cn</region>
+            </forRegions>
+            <urlEntries>
+                <urlEntry appendURL="menu/v2">
+                    <forRevisions>
+                        <rev>rev1</rev>
+                        <rev>rev2</rev>
+                    </forRevisions>
+                </urlEntry>
+                <urlEntry appendURL="menu/v1">
+                    <forRevisions>
+                        <rev>rev3</rev>
+                    </forRevisions>
+                </urlEntry>
+                <urlEntry appendURL="applist/v2">
+                    <forRevisions>
+                        <rev>rev4</rev>
+                    </forRevisions>
+                </urlEntry>
+                <urlEntry appendURL="applist/v3">
+                    <forRevisions>
+                        <rev>rev5</rev>
+                    </forRevisions>
+                </urlEntry>
+            </urlEntries>
+        </backendsEntry>
+
+    </backends>
+
+    <!-- Defines parameters pool for this service -->
+    <parametersPool>
+        <parameter id="config.id" label="Configuration" urlKey="serviceProfileId" appendByDispatcher="true">
+            <options>
+                <option hint="VW - rev1 - ece / jp" value="applist_v3_default_vw_rev1"/>
+                <option hint="VW - rev1 - cn" value="applist_v3_default_vw_rev1_cn"/>
+                <option hint="Skoda - rev1" value="applist_v3_default_skoda_rev1"/>
+                <option hint="Audi - rev4" value="applist_v3_default_audi_rev4"/>
+                <option hint="Audi - rev5" value="applist_v3_default"/>
+                <option hint="Porsche - rev6" value="applist_v3_default_rev6"/>
+                <option hint="Porsche - rev7" value="applist_v3_default_rev7"/>
+                <option hint="Bentley - rev8" value="applist_v3_default_rev8"/>
+            </options>
+        </parameter>
+    </parametersPool>
+
+    <!-- Main entry : applist -->
+    <subapplications>
+        <!-- Main sub application, no specific URL and parameter -->
+        <subapplication name="App. list">
+            <accesses>
+                <!-- VW access for default / GP -->
+                <access appendURL="?service=mainmenu">
+                    <oems>
+                        <valueRef value="vw"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev1"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="eu_rdw"/>
+                        <valueRef value="nar"/>
+                        <valueRef value="jp"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="language" appendByDispatcher="true"/>
+                        <parameter referenceId="dephi_xresolution"/>
+                        <parameter referenceId="dephi_yresolution"/>
+                        <parameter referenceId="config.id" changeDefaultOption="0"/>
+                        <parameter referenceId="skin"/>
+                        <parameter referenceId="ambient"/>
+                    </parameters>
+                    <headers>
+                        <parameter referenceId="accept.language"/>
+                        <parameter referenceId="xresolution_header"/>
+                        <parameter referenceId="yresolution_header"/>
+                        <parameter referenceId="x-skin"/>
+                        <parameter referenceId="x-color"/>
+                    </headers>
+                </access>
+                <!-- VW access China -->
+                <access appendURL="?service=mainmenu">
+                    <oems>
+                        <valueRef value="vw"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev1"/>
+                    </revisions>
+                    <regions>
+                        <valueRef value="cn"/>
+                    </regions>
+                    <parameters>
+                        <parameter referenceId="language" appendByDispatcher="true"/>
+                        <parameter referenceId="config.id" changeDefaultOption="0"/>
+                        <parameter referenceId="skin"/>
+                        <parameter referenceId="ambient"/>
+                    </parameters>
+                    <headers>
+                        <parameter referenceId="accept.language"/>
+                        <parameter referenceId="x-skin"/>
+                        <parameter referenceId="x-color"/>
+                    </headers>
+                </access>
+
+                <!-- Skoda access -->
+                <access>
+                    <oems>
+                        <valueRef value="skoda"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev1"/>
+                    </revisions>
+                    <parameters>
+                        <parameter referenceId="language" appendByDispatcher="true"/>
+                        <parameter referenceId="config.id" changeDefaultOption="2"/>
+                    </parameters>
+                    <headers>
+                        <parameter referenceId="x-skin"/>
+                    </headers>
+                </access>
+                <!-- Rev 4 access -->
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev4"/>
+                    </revisions>
+                    <parameters>
+                        <parameter referenceId="language"/>
+                        <parameter referenceId="model"/>
+                        <parameter referenceId="config.id" changeDefaultOption="3"/>
+                    </parameters>
+                </access>
+                <!-- Rev 5 access -->
+                <access>
+                    <oems>
+                        <valueRef value="audi"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev5"/>
+                    </revisions>
+                    <parameters>
+                        <parameter referenceId="language"/>
+                        <parameter referenceId="model"/>
+                        <parameter referenceId="config.id" changeDefaultOption="4"/>
+                    </parameters>
+                </access>
+                <!-- Rev 6 access -->
+                <access>
+                    <oems>
+                        <valueRef value="porsche"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev6"/>
+                    </revisions>
+                    <parameters>
+                        <parameter referenceId="language"/>
+                        <parameter referenceId="config.id" changeDefaultOption="5"/>
+                    </parameters>
+                </access>
+                <!-- Rev 7 access -->
+                <access>
+                    <oems>
+                        <valueRef value="porsche"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev7"/>
+                    </revisions>
+                    <parameters>
+                        <parameter referenceId="language"/>
+                        <parameter referenceId="config.id" changeDefaultOption="6"/>
+                    </parameters>
+                </access>
+                <!-- Rev 8 access -->
+                <access>
+                    <oems>
+                        <valueRef value="bentley"/>
+                    </oems>
+                    <revisions>
+                        <valueRef value="rev8"/>
+                    </revisions>
+                    <parameters>
+                        <parameter referenceId="language"/>
+                        <parameter referenceId="config.id" changeDefaultOption="7"/>
+                    </parameters>
+                </access>
+            </accesses>
+        </subapplication>
+    </subapplications>
+</service>

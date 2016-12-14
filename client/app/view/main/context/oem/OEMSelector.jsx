@@ -14,8 +14,8 @@ export class OEMSelector extends Component {
 
     renderItem(oem) {
         return (
-            <div className="OEMItem">
-                <div className="OemItemLabel">{oem.label}</div>
+            <div>
+                <div className="ItemLabel">{oem.label}</div>
                 <div className={`OemPictureBase OemPicture${oem.value.toUpperCase()}`}/>
             </div>
         );
@@ -23,7 +23,7 @@ export class OEMSelector extends Component {
 
     render() {
         return <PictureSelector list={this.props.oems} selectedItem={this.props.selectedOEM}
-                                containerClass="OEMSelector" buildItemView={this.renderItem}
+                                buildItemView={this.renderItem}
                                 buildSelectionAction={oem => actionFactory.buildContextSelection("oem", oem)}/>
     }
 
